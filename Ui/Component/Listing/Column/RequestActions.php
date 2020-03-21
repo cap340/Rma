@@ -68,8 +68,8 @@ class RequestActions extends Column
                             ),
                             'label' => __('Delete'),
                             'confirm' => [
-                                'title' => __('Delete "${ $.$data.title }"'),
-                                'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
+                                'title' => __('Delete "${ $.$data.increment_id }"'),
+                                'message' => __('Are you sure you wan\'t to delete "${ $.$data.increment_id }"?')
                             ]
                         ]
                     ];

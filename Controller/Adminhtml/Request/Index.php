@@ -40,7 +40,7 @@ class Index extends Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__("Request"));
+        $resultPage->getConfig()->getTitle()->prepend(__("Manage Requests"));
         return $resultPage;
     }
 
