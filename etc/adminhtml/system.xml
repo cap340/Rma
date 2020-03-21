@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="cap" sortOrder="401" translate="label">
+			<label>CAP 340</label>
+		</tab>
+		<section id="rma" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<class>separator-top</class>
+			<label>R.M.A.</label>
+			<tab>cap</tab>
+			<resource>Cap_Rma::config</resource>
+			<group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>General Configuration</label>
+				<field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enable</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="link" translate="label" type="label" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Module Information</label>
+					<frontend_model>Cap\Rma\Block\Adminhtml\System\Config\Form\Field\Infos</frontend_model>
+				</field>
+			</group>
+			<group id="settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<label>Settings</label>
+				<field id="allowed_orders" type="multiselect" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+					<label>Allowed Order Statuses</label>
+					<comment><![CDATA[Select Order <strong>Statuses</strong> that can apply a request.]]></comment>
+					<source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+				</field>
+				<field id="type" type="multiselect" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+					<label>Request Types</label>
+					<comment><![CDATA[Select one or more <strong>Request Types</strong>. (select none to deactivate.)]]></comment>
+					<source_model>Cap\Rma\Model\Config\Source\Request\Types</source_model>
+				</field>
+			</group>
+			<group id="email" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+			</group>
+		</section>
+	</system>
+</config>
+

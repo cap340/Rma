@@ -44,6 +44,7 @@
 		</argument>
 		<bookmark name="bookmarks"/>
 		<columnsControls name="columns_controls"/>
+		<exportButton name="export_button"/>
 		<filters name="listing_filters"/>
 		<paging name="listing_paging"/>
 	</listingToolbar>
@@ -91,34 +92,14 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">increment_id</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
-				</item>
-			</argument>
-		</column>
-		<actionsColumn class="Cap\Rma\Ui\Component\Listing\Column\RequestActions" name="actions">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="indexField" xsi:type="string">request_id</item>
-				</item>
-			</argument>
-		</actionsColumn>
-		<column name="order_id">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">order_id</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">true</item>
-						</item>
-					</item>
+					<item name="label" translate="true" xsi:type="string">Request</item>
+<!--					<item name="editor" xsi:type="array">-->
+<!--						<item name="editorType" xsi:type="string">text</item>-->
+<!--						<item name="validation" xsi:type="array">-->
+<!--							<item name="required-entry" xsi:type="boolean">false</item>-->
+<!--						</item>-->
+<!--					</item>-->
+					<item name="sortOrder" xsi:type="number">10</item>
 				</item>
 			</argument>
 		</column>
@@ -126,13 +107,14 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">customer_name</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">true</item>
-						</item>
-					</item>
+					<item name="label" translate="true" xsi:type="string">Customer Name</item>
+<!--					<item name="editor" xsi:type="array">-->
+<!--						<item name="editorType" xsi:type="string">text</item>-->
+<!--						<item name="validation" xsi:type="array">-->
+<!--							<item name="required-entry" xsi:type="boolean">true</item>-->
+<!--						</item>-->
+<!--					</item>-->
+					<item name="sortOrder" xsi:type="number">20</item>
 				</item>
 			</argument>
 		</column>
@@ -140,99 +122,89 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">customer_email</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">true</item>
-						</item>
-					</item>
+					<item name="label" translate="true" xsi:type="string">Customer Email</item>
+<!--					<item name="editor" xsi:type="array">-->
+<!--						<item name="editorType" xsi:type="string">text</item>-->
+<!--						<item name="validation" xsi:type="array">-->
+<!--							<item name="required-entry" xsi:type="boolean">true</item>-->
+<!--						</item>-->
+<!--					</item>-->
+					<item name="sortOrder" xsi:type="number">30</item>
+				</item>
+			</argument>
+		</column>
+		<column name="order_id">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Order</item>
+<!--					<item name="editor" xsi:type="array">-->
+<!--						<item name="editorType" xsi:type="string">text</item>-->
+<!--						<item name="validation" xsi:type="array">-->
+<!--							<item name="required-entry" xsi:type="boolean">true</item>-->
+<!--						</item>-->
+<!--					</item>-->
+					<item name="sortOrder" xsi:type="number">40</item>
 				</item>
 			</argument>
 		</column>
 		<column name="type">
 			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Cap\Rma\Model\Config\Source\Request\Types</item>
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">type</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
+					<item name="editor" xsi:type="string">select</item>
+					<item name="filter" xsi:type="string">select</item>
+					<item name="label" translate="true" xsi:type="string">Type</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+					<item name="dataType" xsi:type="string">select</item>
+					<item name="sortOrder" xsi:type="number">50</item>
 				</item>
 			</argument>
 		</column>
 		<column name="status">
 			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Cap\Rma\Model\Config\Source\Request\Status</item>
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">status</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
-				</item>
-			</argument>
-		</column>
-		<column name="description">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">description</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
-				</item>
-			</argument>
-		</column>
-		<column name="comment">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">comment</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
+					<item name="editor" xsi:type="string">select</item>
+					<item name="filter" xsi:type="string">select</item>
+					<item name="label" xsi:type="string" translate="true">Status</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+					<item name="dataType" xsi:type="string">select</item>
+					<item name="sortOrder" xsi:type="number">60</item>
 				</item>
 			</argument>
 		</column>
 		<column name="created_at">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">created_at</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">date</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
+					<item name="filter" xsi:type="string">dateRange</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+					<item name="dataType" xsi:type="string">date</item>
+					<item name="label" xsi:type="string" translate="true">Created At</item>
+					<item name="sortOrder" xsi:type="number">70</item>
 				</item>
 			</argument>
 		</column>
 		<column name="updated_at">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">text</item>
-					<item name="label" translate="true" xsi:type="string">updated_at</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">date</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">false</item>
-						</item>
-					</item>
+					<item name="filter" xsi:type="string">dateRange</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+					<item name="dataType" xsi:type="string">date</item>
+					<item name="label" xsi:type="string" translate="true">Updated At</item>
+					<item name="sortOrder" xsi:type="number">80</item>
 				</item>
 			</argument>
 		</column>
+		<actionsColumn class="Cap\Rma\Ui\Component\Listing\Column\RequestActions" name="actions">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="resizeEnabled" xsi:type="boolean">false</item>
+					<item name="resizeDefaultWidth" xsi:type="string">107</item>
+					<item name="indexField" xsi:type="string">request_id</item>
+					<item name="sortOrder" xsi:type="number">999</item>
+				</item>
+			</argument>
+		</actionsColumn>
 	</columns>
 </listing>
