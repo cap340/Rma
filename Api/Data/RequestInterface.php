@@ -4,17 +4,17 @@ namespace Cap\Rma\Api\Data;
 
 interface RequestInterface
 {
-    const ORDER_ID = 'order_id';
-    const INCREMENT_ID = 'increment_id';
-    const TYPE = 'type';
-    const COMMENT = 'comment';
-    const CUSTOMER_EMAIL = 'customer_email';
-    const CUSTOMER_NAME = 'customer_name';
-    const STATUS = 'status';
-    const UPDATED_AT = 'updated_at';
     const REQUEST_ID = 'request_id';
+    const INCREMENT_ID = 'increment_id';
+    const ORDER_ID = 'order_id';
+    const CUSTOMER_NAME = 'customer_name';
+    const CUSTOMER_EMAIL = 'customer_email';
+    const TYPE = 'type';
+    const STATUS = 'status';
     const DESCRIPTION = 'description';
+    const COMMENT = 'comment';
     const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
     /**
      * Get request_id

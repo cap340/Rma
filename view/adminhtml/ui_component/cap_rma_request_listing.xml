@@ -46,6 +46,35 @@
 		<columnsControls name="columns_controls"/>
 		<exportButton name="export_button"/>
 		<filters name="listing_filters"/>
+		<massaction name="listing_massaction">
+			<action name="accept">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="type" xsi:type="string">accept</item>
+						<item name="label" xsi:type="string" translate="true">Accept</item>
+						<item name="url" xsi:type="url" path="cap_rma/request/massAccept"/>
+					</item>
+				</argument>
+			</action>
+			<action name="reject">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="type" xsi:type="string">reject</item>
+						<item name="label" xsi:type="string" translate="true">Reject</item>
+						<item name="url" xsi:type="url" path="cap_rma/request/massReject"/>
+					</item>
+				</argument>
+			</action>
+			<action name="delete">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="type" xsi:type="string">delete</item>
+						<item name="label" xsi:type="string" translate="true">Delete</item>
+						<item name="url" xsi:type="url" path="cap_rma/request/massDelete"/>
+					</item>
+				</argument>
+			</action>
+		</massaction>
 		<paging name="listing_paging"/>
 	</listingToolbar>
 	<columns name="cap_rma_request_columns">
