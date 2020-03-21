@@ -1,0 +1,16 @@
+{
+    "name": "cap/module-rma",
+    "description": "Automate Request Management Module for Magento2",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Cap\\Rma\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+	<router id="admin">
+		<route frontName="cap_rma" id="cap_rma">
+			<module before="Magento_Backend" name="Cap_Rma"/>
+		</route>
+	</router>
+</config>
