@@ -55,11 +55,13 @@ abstract class AbstractMassAction extends Action
     {
         try {
             $collection = $this->filter->getCollection($this->collectionFactory->create());
+
             return $this->massAction($collection);
         } catch (Exception $e) {
             $this->messageManager->addError($e->getMessage());
             /** @var Redirect $resultRedirect */
             $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+
             return $resultRedirect->setPath($this->redirectUrl);
         }
     }

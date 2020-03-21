@@ -45,11 +45,9 @@ class Edit extends Request
      */
     public function execute()
     {
-        // 1. Get ID and create model
         $id = $this->getRequest()->getParam('request_id');
         $model = $this->_objectManager->create(\Cap\Rma\Model\Request::class);
 
-        // 2. Initial checking
         if ($id) {
             $model->load($id);
             if (!$model->getId()) {
@@ -59,17 +57,18 @@ class Edit extends Request
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('cap_rma_request', $model);
 
-        // 3. Build edit form
+        $this->_coreRegistry->register('cap_rma_request', $model);
         /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
+
         $this->initPage($resultPage)->addBreadcrumb(
             $id ? __('Edit Request') : __('New Request'),
             $id ? __('Edit Request') : __('New Request')
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Requests'));
         $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('New Request'));
+
         return $resultPage;
     }
 

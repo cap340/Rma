@@ -43,6 +43,7 @@ class NewAction extends Request
     {
         /** @var Forward $resultForward */
         $resultForward = $this->resultForwardFactory->create();
+
         return $resultForward->forward('edit');
     }
 
