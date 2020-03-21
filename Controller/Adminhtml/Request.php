@@ -9,7 +9,7 @@ use Magento\Framework\Registry;
 
 abstract class Request extends Action
 {
-    const ADMIN_RESOURCE = 'Cap_Rma::top_level';
+    const ADMIN_RESOURCE = 'Cap_Rma::head';
 
     protected $_coreRegistry;
 

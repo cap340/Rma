@@ -11,6 +11,8 @@ use Magento\Framework\Registry;
 
 class NewAction extends Request
 {
+    const ADMIN_RESOURCE = 'Cap_Rma::request_new';
+
     /**
      * @var ForwardFactory
      */
@@ -42,5 +44,13 @@ class NewAction extends Request
         /** @var Forward $resultForward */
         $resultForward = $this->resultForwardFactory->create();
         return $resultForward->forward('edit');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

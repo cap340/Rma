@@ -10,6 +10,11 @@ use Magento\Framework\Controller\ResultInterface;
 class Delete extends Request
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    const ADMIN_RESOURCE = 'Cap_Rma::request_delete';
+
+    /**
      * Delete action
      *
      * @return ResultInterface
@@ -41,5 +46,13 @@ class Delete extends Request
         $this->messageManager->addErrorMessage(__('We can\'t find a Request to delete.'));
         // go to grid
         return $resultRedirect->setPath('*/*/');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

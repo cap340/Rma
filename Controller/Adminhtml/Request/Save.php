@@ -12,6 +12,11 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 class Save extends Action
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    const ADMIN_RESOURCE = 'Cap_Rma::request_save';
+
+    /**
      * @var DataPersistorInterface
      */
     protected $dataPersistor;
@@ -66,5 +71,13 @@ class Save extends Action
             return $resultRedirect->setPath('*/*/edit', ['request_id' => $this->getRequest()->getParam('request_id')]);
         }
         return $resultRedirect->setPath('*/*/');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

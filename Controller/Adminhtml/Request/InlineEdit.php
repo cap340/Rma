@@ -14,6 +14,11 @@ use Magento\Framework\Controller\ResultInterface;
 class InlineEdit extends Action
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    const ADMIN_RESOURCE = 'Cap_Rma::request_edit';
+
+    /**
      * @var JsonFactory
      */
     protected $jsonFactory;
@@ -68,5 +73,13 @@ class InlineEdit extends Action
             'messages' => $messages,
             'error' => $error
         ]);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

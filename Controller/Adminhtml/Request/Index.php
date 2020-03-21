@@ -9,6 +9,11 @@ use Magento\Framework\View\Result\PageFactory;
 class Index extends Action
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    const ADMIN_RESOURCE = 'Cap_Rma::request';
+
+    /**
      * @var PageFactory
      */
     protected $resultPageFactory;
@@ -37,5 +42,13 @@ class Index extends Action
         $resultPage = $this->resultPageFactory->create();
         $resultPage->getConfig()->getTitle()->prepend(__("Request"));
         return $resultPage;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

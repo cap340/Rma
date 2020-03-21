@@ -13,6 +13,11 @@ use Magento\Framework\View\Result\PageFactory;
 class Edit extends Request
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    const ADMIN_RESOURCE = 'Cap_Rma::request_edit';
+
+    /**
      * @var PageFactory
      */
     protected $resultPageFactory;
@@ -66,5 +71,13 @@ class Edit extends Request
         $resultPage->getConfig()->getTitle()->prepend(__('Requests'));
         $resultPage->getConfig()->getTitle()->prepend($model->getId() ? $model->getTitle() : __('New Request'));
         return $resultPage;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }
