@@ -10,11 +10,41 @@
 ?>
 
 <?php if ($block->isLoggedIn()): ?>
-    <?php echo $block->getChildHtml('dashboard.form'); ?>
-    <?php echo $block->getChildHtml('dashboard.orders'); ?>
-    <?php echo $block->getChildHtml('dashboard.requests'); ?>
+    <?php // Form & Orders ?>
+    <div class="block block-dashboard-rma-form-orders">
+        <div class="block-title">
+            <strong><?php /* @escapeNotVerified */ echo __('Orders & Request Form'); ?></strong>
+        </div>
+        <div class="block-content">
+<!--            --><?php //$orders = $block->getOrdersCanRequest(); ?>
+<!--            --><?php //if (count($orders)): ?>
+                <?php echo $block->getChildHtml('dashboard.form'); ?>
+<!--                --><?php //echo $block->getChildHtml('dashboard.orders'); ?>
+<!--            --><?php //else: ?>
+<!--                <div class="message info">-->
+<!--                    <div>--><?php ///* @escapeNotVerified */ echo __('No Orders To Request'); ?><!--</div>-->
+<!--                </div>-->
+<!--            --><?php //endif ?>
+        </div>
+    </div>
+    <?php // Requests ?>
+    <div class="block block-dashboard-rma-requests">
+        <div class="block-title">
+            <strong><?php /* @escapeNotVerified */ echo __('My Requests'); ?></strong>
+        </div>
+        <div class="block-content">
+            <?php $requests = $block->getCustomerRequests(); ?>
+            <?php if (count($requests)): ?>
+                <?php echo $block->getChildHtml('dashboard.requests'); ?>
+            <?php else: ?>
+                <div class="message notice">
+                    <div><?php /* @escapeNotVerified */ echo __('No Request'); ?></div>
+                </div>
+            <?php endif ?>
+        </div>
+    </div>
 <?php else: ?>
     <div class="message error">
-        <div><?php echo __('You must be logged in'); ?></div>
+        <div><?php /* @escapeNotVerified */ echo __('You must be logged in'); ?></div>
     </div>
 <?php endif; ?>

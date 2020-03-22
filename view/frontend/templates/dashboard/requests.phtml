@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpFullyQualifiedNameUsageInspection */
 /**
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -9,4 +9,32 @@
 /** @var \Cap\Rma\Block\Customer\Dashboard $block */
 ?>
 
-<h3>template requests</h3>
+<div class="table-wrapper rma-request-history">
+    <table class="data table table-request-items history" id="rma-requests-table">
+        <caption class="table-caption"><?php echo $block->escapeHtml(__('Orders')) ?></span></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col id"><?php echo $block->escapeHtml(__('Request #')) ?></th>
+            <th scope="col" class="col date"><?php echo $block->escapeHtml(__('Date')) ?></th>
+            <th scope="col" class="col update"><?php echo $block->escapeHtml(__('Updated')) ?></th>
+<!--            <th scope="col" class="col status">--><?php //echo $block->escapeHtml(__('Status')) ?><!--</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <?php $requests = $block->getCustomerRequests(); ?>
+        <?php /** @var \Cap\Rma\Model\Request $request */ ?>
+        <?php foreach ($requests as $request): ?>
+            <tr>
+                <td data-th="<?php echo $block->escapeHtml(__('Request #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $request->getRequestId(); ?></td>
+                <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getCreatedAt()) ?></td>
+                <?php if ($block->checkUpdatedRequest($request)): ?>
+                    <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col update"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getUpdatedAt()) ?></td>
+                <?php else: ?>
+                    <td></td>
+                <?php endif ?>
+<!--                <td data-th="--><?php //echo $block->escapeHtml(__('Status')) ?><!--" class="col status">--><?php ///* @escapeNotVerified */ echo $block->getStatusLabel($request->getStatus()); ?><!--</td>-->
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
