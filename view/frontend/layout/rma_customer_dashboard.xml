@@ -7,7 +7,11 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block class="Cap\Rma\Block\Customer\Dashboard" name="rma.customer.dashboard" template="Cap_Rma::customer/dashboard.phtml"/>
+            <block class="Cap\Rma\Block\Customer\Dashboard" name="rma.customer.dashboard" template="Cap_Rma::dashboard.phtml">
+                <block class="Cap\Rma\Block\Customer\Dashboard" name="cap.rma.dashboard.form" as="dashboard.form" template="Cap_Rma::dashboard/form.phtml"/>
+                <block class="Cap\Rma\Block\Customer\Dashboard" name="cap.rma.dashboard.orders" as="dashboard.orders" template="Cap_Rma::dashboard/orders.phtml"/>
+                <block class="Cap\Rma\Block\Customer\Dashboard" name="cap.rma.dashboard.requests" as="dashboard.requests" template="Cap_Rma::dashboard/requests.phtml"/>
+            </block>
         </referenceContainer>
     </body>
 </page>

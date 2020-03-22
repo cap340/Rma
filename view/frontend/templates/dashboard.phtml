@@ -1,0 +1,20 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Cap\Rma\Block\Customer\Dashboard $block */
+?>
+
+<?php if ($block->isLoggedIn()): ?>
+    <?php echo $block->getChildHtml('dashboard.form'); ?>
+    <?php echo $block->getChildHtml('dashboard.orders'); ?>
+    <?php echo $block->getChildHtml('dashboard.requests'); ?>
+<?php else: ?>
+    <div class="message error">
+        <div><?php echo __('You must be logged in'); ?></div>
+    </div>
+<?php endif; ?>
