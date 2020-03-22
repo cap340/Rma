@@ -6,7 +6,9 @@
 			<settings>
 				<allowed_orders>closed</allowed_orders>
 			</settings>
-			<email/>
+			<email>
+				<admin>email@domain.com</admin>
+			</email>
 		</rma>
 	</default>
 </config>

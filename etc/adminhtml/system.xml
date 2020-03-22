@@ -39,6 +39,29 @@
 				</field>
 			</group>
 			<group id="email" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+				<label>Email Configuration</label>
+				<field id="admin" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Admin Email</label>
+					<validate>validate-comma-separated-emails</validate>
+					<comment><![CDATA[Comma-separated]]></comment>
+				</field>
+				<field id="sender" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Email Sender</label>
+					<source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+					<validate>required-entry</validate>
+				</field>
+				<field id="template_notify" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notify Email Template</label>
+					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+				</field>
+				<field id="template_accepted" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Approve Email Template</label>
+					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+				</field>
+				<field id="template_rejected" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Reject Email Template</label>
+					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+				</field>
 			</group>
 		</section>
 	</system>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="rma_email_template_notify" label="Notify Email Template" file="admin_request_email.html" type="html" module="Cap_Rma" area="frontend"/>
+    <template id="rma_email_template_accepted" label="Accepted Email Template" file="accepted_email.html" type="html" module="Cap_Rma" area="frontend"/>
+    <template id="rma_email_template_rejected" label="Rejected Email Template" file="rejected_email.html" type="html" module="Cap_Rma" area="frontend"/>
+</config>
