@@ -133,10 +133,15 @@ class Dashboard extends Template
         return '/rma/customer/form';
     }
 
-    public function getRequestTypes()
+    //todo add empty value to disable request or config enable/disable type
+
+    /**
+     * @return array
+     */
+    public function getConfigTypesValue()
     {
-        // todo check if options enable
-        $options = explode(',', $this->helper->getConfigRequestTypes());
+        $options = $this->helper->getConfigRequestTypes();
+        $options = explode(',', $options);
         $values = $this->requestTypes->toOptionArray();
 
         $types = [];

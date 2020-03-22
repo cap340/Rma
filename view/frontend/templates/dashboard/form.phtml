@@ -28,11 +28,6 @@
                     </div>
                 </div>
 
-                <div>
-                    <pre><?php print_r($block->getRequestTypes()); ?></pre>
-                </div>
-
-
 <!--                <div class="field order required">-->
 <!--                    <label class="label" for="orderId">--><?php ///* @escapeNotVerified */ echo __('Order'); ?><!--</label>-->
 <!--                    <div class="control">-->
@@ -45,22 +40,20 @@
 <!--                    </div>-->
 <!--                </div>-->
 
-<!--                --><?php //$typeArray = json_decode($block->getConfigTypeTitle(), true); ?>
-<!--                --><?php //if ($block->getConfigTypeEnable() && count($typeArray)): ?>
-<!--                    <div class="field request-type required">-->
-<!--                        <label class="label" for="requestType">--><?php ///* @escapeNotVerified */ echo __('Request Type'); ?><!--</label>-->
-<!--                        <div class="control">-->
-<!--                            <select id="requestType" name="requestType">-->
-<!--                                <option value="" selected disabled hidden></option>-->
-<!--                                --><?php //foreach ($typeArray as $item): ?>
-<!--                                    --><?php //if ($item['status'] === '1'): ?>
-<!--                                        <option value="--><?php //echo $item['title']; ?><!--">--><?php //echo $item['title']; ?><!--</option>-->
-<!--                                    --><?php //endif ?>
-<!--                                --><?php //endforeach; ?>
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                --><?php //endif; ?>
+                <?php $typesValues = $block->getConfigTypesValue(); ?>
+                <?php if (count($typesValues)): ?>
+                    <div class="field request-type required">
+                        <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
+                        <div class="control">
+                            <select id="requestType" name="requestType">
+                                <option value="" selected disabled hidden></option>
+                                <?php foreach ($typesValues as $type): ?>
+                                    <option value="<?php echo $block->escapeHtml(__($type)); ?>"><?php echo $block->escapeHtml(__($type)); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
                 <div class="field description required">
                     <label class="label" for="description"><?php /* @escapeNotVerified */ echo __('Details'); ?></label>
