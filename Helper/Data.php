@@ -36,7 +36,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Backend
+     * System Configuration
      */
 
     /**

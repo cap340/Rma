@@ -13,18 +13,18 @@
     <div class="box-content">
         <form id="rma-form" class="form" action="<?php echo $block->getFormAction() ?>" method="post">
             <fieldset class="fieldset">
-                <?php //todo customer edit name link ?>
                 <div class="field name required">
                     <label class="label" for="customerName"><?php /* @escapeNotVerified */ echo __('Name'); ?></label>
+                    <small><a href="<?php echo $block->escapeUrl($block->getCustomerEditLink()); ?>">&nbsp;<?php /* @escapeNotVerified */ echo __('edit'); ?></a></small>
                     <div class="control">
                         <input type="hidden" name="customerName" value="<?php echo $block->escapeHtml($block->getCustomerName()) ?>"/>
                         <input type="text" disabled="disabled" name="customerName" class="input-text" value="<?php echo $block->escapeHtml($block->getCustomerName()) ?>"/>
                     </div>
                 </div>
 
-                <?php //todo customer edit email link ?>
                 <div class="field email required">
                     <label class="label" for="customerEmail"><?php /* @escapeNotVerified */ echo __('Email'); ?></label>
+                    <small><a href="<?php echo $block->escapeUrl($block->getCustomerEditLink()); ?>">&nbsp;<?php /* @escapeNotVerified */ echo __('edit'); ?></a></small>
                     <div class="control">
                         <input type="hidden" name="customerEmail" value="<?php echo $block->escapeHtml($block->getCustomerEmail()) ?>"/>
                         <input type="text" disabled="disabled" name="customerEmail" class="input-text" value="<?php echo $block->escapeHtml($block->getCustomerEmail()) ?>"/>

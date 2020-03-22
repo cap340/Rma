@@ -68,6 +68,8 @@ class Dashboard extends Template
         parent::__construct($context, $data);
     }
 
+    //todo add empty value to disable request or config enable/disable type
+
     /**
      * @return bool
      */
@@ -77,6 +79,38 @@ class Dashboard extends Template
             return true;
         }
         return false;
+    }
+
+    /**
+     * Form
+     */
+
+    /**
+     * Form action to send data in Form Controller.
+     *
+     * @return string
+     */
+    public function getFormAction()
+    {
+        return '/rma/customer/form';
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfigTypesValue()
+    {
+        $options = $this->helper->getConfigRequestTypes();
+        $options = explode(',', $options);
+        $values = $this->requestTypes->toOptionArray();
+
+        $types = [];
+        foreach ($values as $key => $value) {
+            if (in_array($key, $options)) {
+                $types[] = $value['label']->getText();
+            }
+        }
+        return $types;
     }
 
     /**
@@ -102,67 +136,16 @@ class Dashboard extends Template
     }
 
     /**
-     * @return RequestCollection
-     */
-    public function getCustomerRequests()
-    {
-        $customerData = $this->customerSession->getCustomerData();
-        $email = $customerData->getEmail();
-        return $this->requestCollectionFactory->create()->addFieldToSelect(
-            '*'
-        )->addFieldToFilter(
-            'customer_email',
-            $email
-        )->setOrder(
-            'created_at',
-            'desc'
-        );
-    }
-
-    /**
-     * @param Request $request
-     * @return bool
-     */
-    public function checkUpdatedRequest(Request $request)
-    {
-        $createdAt = $request->getCreatedAt();
-        $updatedAt = $request->getUpdatedAt();
-        if ($updatedAt !== $createdAt) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Form action to send data in Form Controller.
-     *
      * @return string
      */
-    public function getFormAction()
+    public function getCustomerEditLink()
     {
-        return '/rma/customer/form';
+        return $this->_urlBuilder->getDirectUrl('customer/account/edit/');
     }
-
-    //todo add empty value to disable request or config enable/disable type
 
     /**
-     * @return array
+     * Orders
      */
-    public function getConfigTypesValue()
-    {
-        $options = $this->helper->getConfigRequestTypes();
-        $options = explode(',', $options);
-        $values = $this->requestTypes->toOptionArray();
-
-        $types = [];
-        foreach ($values as $key => $value) {
-            if (in_array($key, $options)) {
-                $types[] = $value['label']->getText();
-            }
-        }
-        return $types;
-    }
 
     /**
      * Returns customer orders with config status filter
@@ -203,5 +186,42 @@ class Dashboard extends Template
         }
 
         return null;
+    }
+
+    /**
+     * Requests
+     */
+
+    /**
+     * @return RequestCollection
+     */
+    public function getCustomerRequests()
+    {
+        $customerData = $this->customerSession->getCustomerData();
+        $email = $customerData->getEmail();
+        return $this->requestCollectionFactory->create()->addFieldToSelect(
+            '*'
+        )->addFieldToFilter(
+            'customer_email',
+            $email
+        )->setOrder(
+            'created_at',
+            'desc'
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function checkUpdatedRequest(Request $request)
+    {
+        $createdAt = $request->getCreatedAt();
+        $updatedAt = $request->getUpdatedAt();
+        if ($updatedAt !== $createdAt) {
+            return true;
+        }
+
+        return false;
     }
 }
