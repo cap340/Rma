@@ -38,13 +38,6 @@ class InstallSchema implements InstallSchemaInterface
             'Increment ID'
         );
         $table_cap_rma_request->addColumn(
-            'order_id',
-            Table::TYPE_TEXT,
-            32,
-            ['nullable' => false],
-            'Order ID'
-        );
-        $table_cap_rma_request->addColumn(
             'customer_name',
             Table::TYPE_TEXT,
             128,

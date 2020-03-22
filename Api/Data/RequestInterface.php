@@ -6,7 +6,6 @@ interface RequestInterface
 {
     const REQUEST_ID = 'request_id';
     const INCREMENT_ID = 'increment_id';
-    const ORDER_ID = 'order_id';
     const CUSTOMER_NAME = 'customer_name';
     const CUSTOMER_EMAIL = 'customer_email';
     const TYPE = 'type';
@@ -45,21 +44,6 @@ interface RequestInterface
      * @return RequestInterface
      */
     public function setIncrementId($incrementId);
-
-    /**
-     * Get order_id
-     *
-     * @return string|null
-     */
-    public function getOrderId();
-
-    /**
-     * Set order_id
-     *
-     * @param string $orderId
-     * @return RequestInterface
-     */
-    public function setOrderId($orderId);
 
     /**
      * Get customer_name

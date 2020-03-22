@@ -60,27 +60,6 @@ class Request extends AbstractModel implements RequestInterface
     }
 
     /**
-     * Get order_id
-     *
-     * @return string
-     */
-    public function getOrderId()
-    {
-        return $this->getData(self::ORDER_ID);
-    }
-
-    /**
-     * Set order_id
-     *
-     * @param string $orderId
-     * @return RequestInterface
-     */
-    public function setOrderId($orderId)
-    {
-        return $this->setData(self::ORDER_ID, $orderId);
-    }
-
-    /**
      * Get customer_name
      *
      * @return string
