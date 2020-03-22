@@ -165,15 +165,21 @@ class Dashboard extends Template
     }
 
     /**
+     * Returns customer orders with config status filter
+     *
      * @return OrderCollection
      */
-    public function getCustomerOrders()
+    public function getCustomerOrdersCanRequest()
     {
         $customerId = $this->customerSession->getCustomer()->getId();
+
+        $options = $this->helper->getConfigAllowedOrders();
+        $options = explode(',', $options);
 
         $orders = $this->orderCollectionFactory->create();
         return $orders->addFieldToSelect('*')
             ->addFieldToFilter('customer_id', $customerId)
+            ->addFieldToFilter('status', ['in' => $options])
             ->setOrder('created_at', 'desc');
     }
 
@@ -188,20 +194,14 @@ class Dashboard extends Template
     }
 
     /**
-     * @param Order $order
-     * @return bool
+     * @return mixed
      */
-    public function isOrderCanRequest(Order $order)
+    public function getPolicyLink()
     {
-        //todo check in dashboard.phtml first level VS count($orders)
-        //todo OR add filter in getCustomerOrders()
-        $options = $this->helper->getConfigAllowedOrders();
-        $options = explode(',', $options);
-        $orderStatus = $order->getStatus();
-        if (in_array($orderStatus, $options)) {
-            return true;
+        if ($this->helper->getConfigPolicyUrl()) {
+            return $this->_urlBuilder->getDirectUrl($this->helper->getConfigPolicyUrl());
         }
 
-        return false;
+        return null;
     }
 }

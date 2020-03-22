@@ -36,13 +36,10 @@
                     <div class="control">
                         <select id="orderIncrementId" name="orderIncrementId">
                             <option value="" selected disabled hidden></option>
-                            <?php $orders = $block->getCustomerOrders(); ?>
+                            <?php $orders = $block->getCustomerOrdersCanRequest(); ?>
                             <?php /** @var \Magento\Sales\Model\Order $order */ ?>
                             <?php foreach ($orders as $order): ?>
-                                <?php if ($block->isOrderCanRequest($order)): ?>
-                                    <option value="<?php echo $block->escapeHtml($order->getIncrementId()); ?>"><?php /* @escapeNotVerified */
-                                        echo $order->getIncrementId(); ?></option>
-                                <?php endif ?>
+                                    <option value="<?php echo $block->escapeHtml($order->getIncrementId()); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

@@ -28,10 +28,14 @@
 					<comment><![CDATA[Select Order <strong>Statuses</strong> that can apply a request.]]></comment>
 					<source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
 				</field>
-				<field id="type" type="multiselect" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<field id="types" type="multiselect" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
 					<label>Request Types</label>
 					<comment><![CDATA[Select one or more <strong>Request Types</strong>. (select none to deactivate.)]]></comment>
 					<source_model>Cap\Rma\Model\Config\Source\Request\Types</source_model>
+				</field>
+				<field id="policy_url" type="text" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+					<label>Request Policy Url</label>
+					<comment>Relative url (e.g., help/return-policy)</comment>
 				</field>
 			</group>
 			<group id="email" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">

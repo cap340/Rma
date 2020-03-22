@@ -9,13 +9,12 @@ use Magento\Store\Model\ScopeInterface;
 
 class Data extends AbstractHelper
 {
-    //todo: types vs type in system.xml
-
     /**
      * System path configuration
      */
-    const CONFIG_TYPES = 'rma/settings/type';
+    const CONFIG_TYPES = 'rma/settings/types';
     const CONFIG_ALLOWED_ORDERS = 'rma/settings/allowed_orders';
+    const CONFIG_POLICY_URL = 'rma/settings/policy_url';
 
     /**
      * @var ScopeConfigInterface
@@ -56,5 +55,14 @@ class Data extends AbstractHelper
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
         return $this->scopeConfig->getValue(self::CONFIG_ALLOWED_ORDERS, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigPolicyUrl()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_POLICY_URL, $storeScope);
     }
 }

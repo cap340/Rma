@@ -12,8 +12,10 @@
 <div class="box box-rma-orders">
     <strong class="box-title"><?php /* @escapeNotVerified */ echo __('My Orders'); ?></strong>
     <div class="box-content">
-        <span><?php /* @escapeNotVerified */ echo __('List of my orders that meet the request conditions.'); ?></span>
-        <span> (<a href=""><?php /* @escapeNotVerified */ echo __('CGV Link'); ?></a>)</span>
+        <span><?php /* @escapeNotVerified */ echo __('Orders that meet the request conditions.'); ?></span>
+        <?php if ($block->getPolicyLink()): ?>
+            <span> (<a href="<?php echo $block->escapeUrl($block->getPolicyLink()); ?>"><?php /* @escapeNotVerified */ echo __('Return Policy'); ?></a>)</span>
+        <?php endif ?>
     </div>
     <div class="table-wrapper rma-orders-history">
         <table class="data table table-order-items history" id="rma-orders-table">
@@ -27,18 +29,16 @@
             </thead>
             <tbody>
             <?php //todo case if too many orders ?>
-            <?php $orders = $block->getCustomerOrders(); ?>
+            <?php $orders = $block->getCustomerOrdersCanRequest(); ?>
             <?php /** @var \Magento\Sales\Model\Order $order */ ?>
             <?php foreach ($orders as $order): ?>
-                <?php if ($block->isOrderCanRequest($order)): ?>
-                    <tr>
-                        <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id">
-                            <a href="<?php echo $block->escapeUrl($block->getOrderLink($order)); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></a>
-                        </td>
-                        <td data-th="<?php echo $block->escapeHtml(__('Date #')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($order->getCreatedAt()) ?></td>
-                        <td data-th="<?php echo $block->escapeHtml(__('Total #')) ?>" class="col total"><?php /* @escapeNotVerified */ echo $order->formatPrice($order->getGrandTotal()) ?></td>
-                    </tr>
-                <?php endif; ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id">
+                        <a href="<?php echo $block->escapeUrl($block->getOrderLink($order)); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></a>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Date #')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($order->getCreatedAt()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Total #')) ?>" class="col total"><?php /* @escapeNotVerified */ echo $order->formatPrice($order->getGrandTotal()) ?></td>
+                </tr>
             <?php endforeach; ?>
             </tbody>
         </table>

@@ -16,13 +16,18 @@
             <strong><?php /* @escapeNotVerified */ echo __('Orders & Request Form'); ?></strong>
         </div>
         <div class="block-content">
-            <?php $orders = $block->getCustomerOrders(); ?>
+            <?php $orders = $block->getCustomerOrdersCanRequest(); ?>
             <?php if (count($orders)): ?>
                 <?php echo $block->getChildHtml('dashboard.form'); ?>
                 <?php echo $block->getChildHtml('dashboard.orders'); ?>
             <?php else: ?>
                 <div class="message info">
-                    <div><?php /* @escapeNotVerified */ echo __('No Orders To Request'); ?></div>
+                    <div>
+                        <?php /* @escapeNotVerified */ echo __('You have no order that meets the request conditions.'); ?>
+                        <?php if($block->getPolicyLink()): ?>
+                            <span> <a href="<?php echo $block->escapeUrl($block->getPolicyLink()); ?>" title="<?php $block->escapeHtml(__('Return Policy')) ?>"><?php /* @escapeNotVerified */ echo __('Return Policy'); ?></a></span>
+                        <?php endif; ?>
+                    </div>
                 </div>
             <?php endif ?>
         </div>
