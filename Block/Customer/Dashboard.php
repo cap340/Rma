@@ -9,6 +9,9 @@ use Cap\Rma\Model\ResourceModel\Request\Collection as RequestCollection;
 use Cap\Rma\Model\ResourceModel\Request\CollectionFactory as RequestCollectionFactory;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\View\Element\Template;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\ResourceModel\Order\Collection as OrderCollection;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory as OrdersCollectionFactory;
 
 class Dashboard extends Template
 {
@@ -33,6 +36,11 @@ class Dashboard extends Template
     protected $requestTypes;
 
     /**
+     * @var OrdersCollectionFactory
+     */
+    protected $orderCollectionFactory;
+
+    /**
      * Dashboard constructor.
      *
      * @param Template\Context $context
@@ -40,6 +48,7 @@ class Dashboard extends Template
      * @param RequestCollectionFactory $requestCollectionFactory
      * @param Data $helper
      * @param RequestTypes $requestTypes
+     * @param OrdersCollectionFactory $ordersCollectionFactory
      * @param array $data
      */
     public function __construct(
@@ -48,12 +57,14 @@ class Dashboard extends Template
         RequestCollectionFactory $requestCollectionFactory,
         Data $helper,
         RequestTypes $requestTypes,
+        OrdersCollectionFactory $ordersCollectionFactory,
         array $data = []
     ) {
         $this->customerSession = $customerSession;
         $this->requestCollectionFactory = $requestCollectionFactory;
         $this->helper = $helper;
         $this->requestTypes = $requestTypes;
+        $this->orderCollectionFactory = $ordersCollectionFactory;
         parent::__construct($context, $data);
     }
 
@@ -151,5 +162,28 @@ class Dashboard extends Template
             }
         }
         return $types;
+    }
+
+    /**
+     * @return OrderCollection
+     */
+    public function getCustomerOrders()
+    {
+        $customerId = $this->customerSession->getCustomer()->getId();
+
+        $orders = $this->orderCollectionFactory->create();
+        return $orders->addFieldToSelect('*')
+            ->addFieldToFilter('customer_id', $customerId)
+            ->setOrder('created_at', 'desc');
+    }
+
+    /**
+     * @param Order $order
+     * @return string
+     */
+    public function getOrderLink(Order $order)
+    {
+        $orderId = $order->getId();
+        return $this->_urlBuilder->getDirectUrl('sales/order/view/order_id/' . $orderId);
     }
 }

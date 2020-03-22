@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpFullyQualifiedNameUsageInspection */
 /**
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -16,15 +16,15 @@
             <strong><?php /* @escapeNotVerified */ echo __('Orders & Request Form'); ?></strong>
         </div>
         <div class="block-content">
-<!--            --><?php //$orders = $block->getOrdersCanRequest(); ?>
-<!--            --><?php //if (count($orders)): ?>
+            <?php $orders = $block->getCustomerOrders(); ?>
+            <?php if (count($orders)): ?>
                 <?php echo $block->getChildHtml('dashboard.form'); ?>
-<!--                --><?php //echo $block->getChildHtml('dashboard.orders'); ?>
-<!--            --><?php //else: ?>
-<!--                <div class="message info">-->
-<!--                    <div>--><?php ///* @escapeNotVerified */ echo __('No Orders To Request'); ?><!--</div>-->
-<!--                </div>-->
-<!--            --><?php //endif ?>
+                <?php echo $block->getChildHtml('dashboard.orders'); ?>
+            <?php else: ?>
+                <div class="message info">
+                    <div><?php /* @escapeNotVerified */ echo __('No Orders To Request'); ?></div>
+                </div>
+            <?php endif ?>
         </div>
     </div>
     <?php // Requests ?>

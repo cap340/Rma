@@ -39,6 +39,9 @@ class Data extends AbstractHelper
      * Backend
      */
 
+    /**
+     * @return mixed
+     */
     public function getConfigRequestTypes()
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
