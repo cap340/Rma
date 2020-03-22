@@ -4,33 +4,33 @@ namespace Cap\Rma\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Sales\Model\Order;
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 
 class Customer extends Column
 {
     /**
-     * @var Order
+     * @var OrderInterface
      */
-    protected $order;
+    protected $orderInterface;
 
     /**
      * Customer constructor.
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param Order $order
+     * @param OrderInterface $orderInterface
      * @param array $components
      * @param array $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        Order $order,
+        OrderInterface $orderInterface,
         array $components = [],
         array $data = []
     ) {
-        $this->order = $order;
+        $this->orderInterface = $orderInterface;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -60,10 +60,8 @@ class Customer extends Column
      */
     private function getCustomerId($item)
     {
-        $orderId = $item['order_id'];
-        $order = $this->order->loadByAttribute('entity_id', $orderId);
-
-        return $order->getCustomerId();
+        $incrementId = $item['increment_id'];
+        return $this->orderInterface->loadByIncrementId($incrementId)->getCustomerId();
     }
 
     /**

@@ -111,19 +111,9 @@
 		<column name="request_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="visible" xsi:type="boolean">false</item>
 					<item name="filter" xsi:type="string">textRange</item>
 					<item name="sorting" xsi:type="string">desc</item>
 					<item name="label" translate="true" xsi:type="string">ID</item>
-					<item name="sortOrder" xsi:type="number">5</item>
-				</item>
-			</argument>
-		</column>
-		<column name="increment_id">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">textRange</item>
-					<item name="label" translate="true" xsi:type="string">Request</item>
 					<item name="sortOrder" xsi:type="number">10</item>
 				</item>
 			</argument>
@@ -155,7 +145,7 @@
 				</item>
 			</argument>
 		</column>
-		<column name="order_id" class="\Cap\Rma\Ui\Component\Listing\Column\Order">
+		<column name="increment_id" class="\Cap\Rma\Ui\Component\Listing\Column\Order">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">textRange</item>

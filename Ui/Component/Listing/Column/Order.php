@@ -4,39 +4,37 @@ namespace Cap\Rma\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Sales\Model\Order as ModelOrder;
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 
 class Order extends Column
 {
     /**
-     * @var ModelOrder
+     * @var OrderInterface
      */
-    protected $order;
+    protected $orderInterface;
 
     /**
      * Customer constructor.
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param ModelOrder $order
+     * @param OrderInterface $orderInterface
      * @param array $components
      * @param array $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        ModelOrder $order,
+        OrderInterface $orderInterface,
         array $components = [],
         array $data = []
     ) {
-        $this->order = $order;
+        $this->orderInterface = $orderInterface;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param array $dataSource
      * @return array
      */
@@ -44,11 +42,10 @@ class Order extends Column
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as &$item) {
-                $entityId = $item['order_id'];
-                $item['order_id_url'] = $this->getLink($entityId);
+                $entityId = $this->getEntityId($item);
+                $item['increment_id_url'] = $this->getLink($entityId);
             }
         }
-
         return $dataSource;
     }
 
@@ -59,5 +56,15 @@ class Order extends Column
     private function getLink($entityId)
     {
         return $this->context->getUrl('sales/order/view', ['order_id' => $entityId]);
+    }
+
+    /**
+     * @param $item
+     * @return mixed
+     */
+    public function getEntityId($item)
+    {
+        $incrementId = $item['increment_id'];
+        return $this->orderInterface->loadByIncrementId($incrementId)->getEntityId();
     }
 }

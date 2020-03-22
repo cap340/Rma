@@ -2,6 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
 		<add id="Cap_Rma::head" dependsOnConfig="rma/general/enable" title="Cap R.M.A." translate="title"  module="Cap_Rma" sortOrder="999"  parent="Magento_Sales::sales" resource="Cap_Rma::head" />
-		<add id="Cap_Rma::request_index" title="Customer Requests" translate="title" module="Cap_Rma" sortOrder="10" parent="Cap_Rma::head" action="cap_rma/request/index" resource="Cap_Rma::request_index"/>
+		<add id="Cap_Rma::request_index" title="Manage Requests" translate="title" module="Cap_Rma" sortOrder="10" parent="Cap_Rma::head" action="cap_rma/request/index" resource="Cap_Rma::request_index"/>
 	</menu>
 </config>
