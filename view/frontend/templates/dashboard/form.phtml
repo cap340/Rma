@@ -13,6 +13,7 @@
     <div class="box-content">
         <form id="rma-form" class="form" action="<?php echo $block->getFormAction() ?>" method="post">
             <fieldset class="fieldset">
+                <?php //todo customer edit name link ?>
                 <div class="field name required">
                     <label class="label" for="customerName"><?php /* @escapeNotVerified */ echo __('Name'); ?></label>
                     <div class="control">
@@ -21,6 +22,7 @@
                     </div>
                 </div>
 
+                <?php //todo customer edit email link ?>
                 <div class="field email required">
                     <label class="label" for="customerEmail"><?php /* @escapeNotVerified */ echo __('Email'); ?></label>
                     <div class="control">
@@ -37,7 +39,10 @@
                             <?php $orders = $block->getCustomerOrders(); ?>
                             <?php /** @var \Magento\Sales\Model\Order $order */ ?>
                             <?php foreach ($orders as $order): ?>
-                                <option value="<?php echo $block->escapeHtml($order->getIncrementId()); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></option>
+                                <?php if ($block->isOrderCanRequest($order)): ?>
+                                    <option value="<?php echo $block->escapeHtml($order->getIncrementId()); ?>"><?php /* @escapeNotVerified */
+                                        echo $order->getIncrementId(); ?></option>
+                                <?php endif ?>
                             <?php endforeach; ?>
                         </select>
                     </div>

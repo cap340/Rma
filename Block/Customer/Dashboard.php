@@ -3,8 +3,8 @@
 namespace Cap\Rma\Block\Customer;
 
 use Cap\Rma\Helper\Data;
-use Cap\Rma\Model\Request;
 use Cap\Rma\Model\Config\Source\Request\Types as RequestTypes;
+use Cap\Rma\Model\Request;
 use Cap\Rma\Model\ResourceModel\Request\Collection as RequestCollection;
 use Cap\Rma\Model\ResourceModel\Request\CollectionFactory as RequestCollectionFactory;
 use Magento\Customer\Model\Session as CustomerSession;
@@ -185,5 +185,23 @@ class Dashboard extends Template
     {
         $orderId = $order->getId();
         return $this->_urlBuilder->getDirectUrl('sales/order/view/order_id/' . $orderId);
+    }
+
+    /**
+     * @param Order $order
+     * @return bool
+     */
+    public function isOrderCanRequest(Order $order)
+    {
+        //todo check in dashboard.phtml first level VS count($orders)
+        //todo OR add filter in getCustomerOrders()
+        $options = $this->helper->getConfigAllowedOrders();
+        $options = explode(',', $options);
+        $orderStatus = $order->getStatus();
+        if (in_array($orderStatus, $options)) {
+            return true;
+        }
+
+        return false;
     }
 }
