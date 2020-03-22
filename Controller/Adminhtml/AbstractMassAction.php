@@ -1,6 +1,6 @@
 <?php
 
-namespace Cap\Rma\Controller\Adminhtml\Request;
+namespace Cap\Rma\Controller\Adminhtml;
 
 use Exception;
 use Magento\Backend\App\Action;

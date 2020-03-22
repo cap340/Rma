@@ -2,6 +2,7 @@
 
 namespace Cap\Rma\Controller\Adminhtml\Request;
 
+use Cap\Rma\Controller\Adminhtml\AbstractMassAction;
 use Cap\Rma\Model\Config\Source\Request\Status;
 use Cap\Rma\Model\ResourceModel\Request\CollectionFactory;
 use Magento\Backend\App\Action\Context;

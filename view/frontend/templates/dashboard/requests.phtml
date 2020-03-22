@@ -15,9 +15,10 @@
         <thead>
         <tr>
             <th scope="col" class="col id"><?php echo $block->escapeHtml(__('Request #')) ?></th>
+            <th scope="col" class="col status"><?php echo $block->escapeHtml(__('Status')) ?></th>
             <th scope="col" class="col date"><?php echo $block->escapeHtml(__('Date')) ?></th>
             <th scope="col" class="col update"><?php echo $block->escapeHtml(__('Updated')) ?></th>
-<!--            <th scope="col" class="col status">--><?php //echo $block->escapeHtml(__('Status')) ?><!--</th>-->
+            <th scope="col" class="col details"><?php echo $block->escapeHtml(__('Details')) ?></th>
         </tr>
         </thead>
         <tbody>
@@ -26,14 +27,20 @@
         <?php /** @var \Cap\Rma\Model\Request $request */ ?>
         <?php foreach ($requests as $request): ?>
             <tr>
-                <td data-th="<?php echo $block->escapeHtml(__('Request #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $request->getRequestId(); ?></td>
+                <td data-th="<?php echo $block->escapeHtml(__('Request #')) ?>" class="col id">
+                    <?php /* @escapeNotVerified */ echo $request->getRequestId(); ?>
+                </td>
+                <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo 'status'; ?></td>
                 <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getCreatedAt()) ?></td>
-                <?php if ($block->checkUpdatedRequest($request)): ?>
-                    <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col update"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getUpdatedAt()) ?></td>
-                <?php else: ?>
-                    <td></td>
-                <?php endif ?>
-<!--                <td data-th="--><?php //echo $block->escapeHtml(__('Status')) ?><!--" class="col status">--><?php ///* @escapeNotVerified */ echo $block->getStatusLabel($request->getStatus()); ?><!--</td>-->
+                <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col update">
+                    <?php if ($block->checkUpdatedRequest($request)): ?>
+                        <?php /* @escapeNotVerified */ echo $block->formatDate($request->getUpdatedAt()) ?>
+                    <?php endif ?>
+                </td>
+                <td data-th="<?php echo $block->escapeHtml(__('Details')) ?>" class="col details">
+                    <?php //todo customer request view page ?>
+                    <a href=""><?php /* @escapeNotVerified */ echo __('view'); ?></a>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
