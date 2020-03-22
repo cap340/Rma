@@ -2,7 +2,9 @@
 
 namespace Cap\Rma\Block\Customer;
 
+use Cap\Rma\Helper\Data;
 use Cap\Rma\Model\Request;
+use Cap\Rma\Model\Config\Source\Request\Types as RequestTypes;
 use Cap\Rma\Model\ResourceModel\Request\Collection as RequestCollection;
 use Cap\Rma\Model\ResourceModel\Request\CollectionFactory as RequestCollectionFactory;
 use Magento\Customer\Model\Session as CustomerSession;
@@ -21,21 +23,37 @@ class Dashboard extends Template
     protected $requestCollectionFactory;
 
     /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
+     * @var RequestTypes
+     */
+    protected $requestTypes;
+
+    /**
      * Dashboard constructor.
      *
      * @param Template\Context $context
      * @param CustomerSession $customerSession
      * @param RequestCollectionFactory $requestCollectionFactory
+     * @param Data $helper
+     * @param RequestTypes $requestTypes
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
         CustomerSession $customerSession,
         RequestCollectionFactory $requestCollectionFactory,
+        Data $helper,
+        RequestTypes $requestTypes,
         array $data = []
     ) {
         $this->customerSession = $customerSession;
         $this->requestCollectionFactory = $requestCollectionFactory;
+        $this->helper = $helper;
+        $this->requestTypes = $requestTypes;
         parent::__construct($context, $data);
     }
 
@@ -113,5 +131,20 @@ class Dashboard extends Template
     public function getFormAction()
     {
         return '/rma/customer/form';
+    }
+
+    public function getRequestTypes()
+    {
+        // todo check if options enable
+        $options = explode(',', $this->helper->getConfigRequestTypes());
+        $values = $this->requestTypes->toOptionArray();
+
+        $types = [];
+        foreach ($values as $key => $value) {
+            if (in_array($key, $options)) {
+                $types[] = $value['label']->getText();
+            }
+        }
+        return $types;
     }
 }
