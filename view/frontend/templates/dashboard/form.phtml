@@ -20,6 +20,7 @@
                         <input type="text" disabled="disabled" name="customerName" class="input-text" value="<?php echo $block->escapeHtml($block->getCustomerName()) ?>"/>
                     </div>
                 </div>
+
                 <div class="field email required">
                     <label class="label" for="customerEmail"><?php /* @escapeNotVerified */ echo __('Email'); ?></label>
                     <div class="control">
@@ -28,17 +29,19 @@
                     </div>
                 </div>
 
-<!--                <div class="field order required">-->
-<!--                    <label class="label" for="orderId">--><?php ///* @escapeNotVerified */ echo __('Order'); ?><!--</label>-->
-<!--                    <div class="control">-->
-<!--                        <select id="orderId" name="orderId">-->
-<!--                            <option value="" selected disabled hidden></option>-->
-<!--                            --><?php //foreach ($orders as $order): ?>
-<!--                                <option value="--><?php //echo $order->getId(); ?><!--">--><?php //echo $order->getIncrementId(); ?><!--</option>-->
-<!--                            --><?php //endforeach; ?>
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="field order required">
+                    <label class="label" for="orderIncrementId"><?php /* @escapeNotVerified */ echo __('Order'); ?></label>
+                    <div class="control">
+                        <select id="orderIncrementId" name="orderIncrementId">
+                            <option value="" selected disabled hidden></option>
+                            <?php $orders = $block->getCustomerOrders(); ?>
+                            <?php /** @var \Magento\Sales\Model\Order $order */ ?>
+                            <?php foreach ($orders as $order): ?>
+                                <option value="<?php echo $block->escapeHtml($order->getIncrementId()); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
 
                 <?php $typesValues = $block->getConfigTypesValue(); ?>
                 <?php if (count($typesValues)): ?>

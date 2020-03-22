@@ -48,12 +48,18 @@ class Form extends Action
         if (!empty($post)) {
             $customerName = $post['customerName'];
             $customerEmail = $post['customerEmail'];
+            $orderIncrementId = $post['orderIncrementId'];
+            //todo check if not empty
+            $requestType = $post['requestType'];
             $description = $post['description'];
 
             $model = $this->requestFactory->create();
 
             $model->setCustomerName($customerName);
             $model->setCustomerEmail($customerEmail);
+            $model->setIncrementId($orderIncrementId);
+            //todo check if not empty
+            $model->setType($requestType);
             $model->setDescription($description);
             $model->save();
 
