@@ -46,25 +46,18 @@ class Form extends Action
 
         //todo: required fields
         if (!empty($post)) {
-            $customerName = $post['customerName'];
-            $customerEmail = $post['customerEmail'];
-            $orderIncrementId = $post['orderIncrementId'];
-            //todo check if not empty
-            $requestType = $post['requestType'];
-            $description = $post['description'];
-
             $model = $this->requestFactory->create();
-
-            $model->setCustomerName($customerName);
-            $model->setCustomerEmail($customerEmail);
-            $model->setIncrementId($orderIncrementId);
-            //todo check if not empty
-            $model->setType($requestType);
-            $model->setDescription($description);
+            $model->setCustomerName($post['customerName']);
+            $model->setCustomerEmail($post['customerEmail']);
+            $model->setIncrementId($post['orderIncrementId']);
+            if (isset($post['requestType'])) {
+                $model->setType($post['requestType']);
+            }
+            $model->setDescription($post['description']);
             $model->save();
 
             $requestId = $model->getRequestId();
-            $this->messageManager->addSuccessMessage(__('Request number #%1 have been submitted.', $requestId));
+            $this->messageManager->addSuccessMessage(__('You\'re request number #%1 have been submitted.', $requestId));
 
             $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
             $resultRedirect->setUrl('/rma/customer/dashboard');
