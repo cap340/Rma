@@ -12,7 +12,6 @@ class Status implements OptionSourceInterface
     const STATUS_PENDING = 0;
     const STATUS_ACCEPTED = 1;
     const STATUS_REJECTED = 2;
-    const STATUS_NA = null;
 
     /**
      * To Option Array
@@ -24,8 +23,7 @@ class Status implements OptionSourceInterface
         return [
             ['value' => self::STATUS_PENDING, 'label' => __('Pending')],
             ['value' => self::STATUS_ACCEPTED, 'label' => __('Accepted')],
-            ['value' => self::STATUS_REJECTED, 'label' => __('Rejected')],
-            ['value' => self::STATUS_NA, 'label' => __('N/A')]
+            ['value' => self::STATUS_REJECTED, 'label' => __('Rejected')]
         ];
     }
 }

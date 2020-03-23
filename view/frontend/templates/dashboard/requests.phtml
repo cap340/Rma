@@ -30,7 +30,9 @@
                 <td data-th="<?php echo $block->escapeHtml(__('Request #')) ?>" class="col id">
                     <?php /* @escapeNotVerified */ echo $request->getRequestId(); ?>
                 </td>
-                <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo 'status'; ?></td>
+                <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status">
+                    <?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getStatusOptionLabel($request->getStatus())); ?>
+                </td>
                 <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getCreatedAt()) ?></td>
                 <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col update">
                     <?php if ($block->checkUpdatedRequest($request)): ?>

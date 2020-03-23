@@ -3,6 +3,7 @@
 namespace Cap\Rma\Block\Customer;
 
 use Cap\Rma\Helper\Data;
+use Cap\Rma\Model\Config\Source\Request\Status as RequestStatus;
 use Cap\Rma\Model\Config\Source\Request\Types as RequestTypes;
 use Cap\Rma\Model\Request;
 use Cap\Rma\Model\ResourceModel\Request\Collection as RequestCollection;
@@ -41,6 +42,11 @@ class Dashboard extends Template
     protected $orderCollectionFactory;
 
     /**
+     * @var RequestStatus
+     */
+    protected $requestStatus;
+
+    /**
      * Dashboard constructor.
      *
      * @param Template\Context $context
@@ -49,6 +55,7 @@ class Dashboard extends Template
      * @param Data $helper
      * @param RequestTypes $requestTypes
      * @param OrdersCollectionFactory $ordersCollectionFactory
+     * @param RequestStatus $requestStatus
      * @param array $data
      */
     public function __construct(
@@ -58,6 +65,7 @@ class Dashboard extends Template
         Data $helper,
         RequestTypes $requestTypes,
         OrdersCollectionFactory $ordersCollectionFactory,
+        RequestStatus $requestStatus,
         array $data = []
     ) {
         $this->customerSession = $customerSession;
@@ -65,6 +73,7 @@ class Dashboard extends Template
         $this->helper = $helper;
         $this->requestTypes = $requestTypes;
         $this->orderCollectionFactory = $ordersCollectionFactory;
+        $this->requestStatus = $requestStatus;
         parent::__construct($context, $data);
     }
 
@@ -119,7 +128,7 @@ class Dashboard extends Template
             if (in_array($key, $options)) {
                 $types[] = [
                     'value' => $value['value'],
-                    'label' => $value['label']->getText()
+                    'label' => $value['label']
                 ];
             }
         }
@@ -221,6 +230,22 @@ class Dashboard extends Template
             'created_at',
             'desc'
         );
+    }
+
+    /**
+     * @param $optionId
+     * @return mixed|null
+     */
+    public function getStatusOptionLabel($optionId)
+    {
+        $options = $this->requestStatus->toOptionArray();
+        foreach ($options as $key => $option) {
+            if (in_array($optionId, $option)) {
+                return $option['label'];
+            }
+        }
+
+        return null;
     }
 
     /**
