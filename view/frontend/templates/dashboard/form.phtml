@@ -39,10 +39,11 @@
                     </div>
                 </div>
 
-                <?php $types = $block->getTypes(); ?>
-                <?php if (count($types)): ?>
+                <?php if ($block->getTypesEnable()): ?>
+                    <?php $types = $block->getTypesOptions(); ?>
                     <div class="field request-type required">
-                        <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
+                        <label class="label" for="requestType"><?php /* @escapeNotVerified */
+                            echo __('Request Type'); ?></label>
                         <div class="control">
                             <select id="requestType" name="requestType">
                                 <option value="" selected disabled hidden></option>
@@ -52,7 +53,7 @@
                             </select>
                         </div>
                     </div>
-                <?php endif; ?>
+                <?php endif ?>
 
                 <div class="field description required">
                     <label class="label" for="description"><?php /* @escapeNotVerified */ echo __('Details'); ?></label>

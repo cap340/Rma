@@ -68,7 +68,9 @@ class Dashboard extends Template
         parent::__construct($context, $data);
     }
 
-    //todo add empty value to disable request or config enable/disable type
+    /**
+     * Form
+     */
 
     /**
      * @return bool
@@ -82,10 +84,6 @@ class Dashboard extends Template
     }
 
     /**
-     * Form
-     */
-
-    /**
      * Form action to send data in Form Controller.
      *
      * @return string
@@ -96,11 +94,23 @@ class Dashboard extends Template
     }
 
     /**
+     * @return bool
+     */
+    public function getTypesEnable()
+    {
+        if ($this->helper->getConfigTypesEnable()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @return array
      */
-    public function getTypes()
+    public function getTypesOptions()
     {
-        $options = $this->helper->getConfigRequestTypes();
+        $options = $this->helper->getConfigTypesOptions();
         $options = explode(',', $options);
         $values = $this->requestTypes->toOptionArray();
 

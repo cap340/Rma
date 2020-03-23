@@ -12,7 +12,8 @@ class Data extends AbstractHelper
     /**
      * System path configuration
      */
-    const CONFIG_TYPES = 'rma/settings/types';
+    const CONFIG_TYPES_ENABLE = 'rma/settings/types_enable';
+    const CONFIG_TYPES_OPTIONS = 'rma/settings/types';
     const CONFIG_ALLOWED_ORDERS = 'rma/settings/allowed_orders';
     const CONFIG_POLICY_URL = 'rma/settings/policy_url';
 
@@ -42,10 +43,19 @@ class Data extends AbstractHelper
     /**
      * @return mixed
      */
-    public function getConfigRequestTypes()
+    public function getConfigTypesEnable()
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
-        return $this->scopeConfig->getValue(self::CONFIG_TYPES, $storeScope);
+        return $this->scopeConfig->getValue(self::CONFIG_TYPES_ENABLE, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigTypesOptions()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_TYPES_OPTIONS, $storeScope);
     }
 
     /**
