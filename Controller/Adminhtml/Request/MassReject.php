@@ -7,6 +7,7 @@ use Cap\Rma\Model\Config\Source\Request\Status;
 use Cap\Rma\Model\ResourceModel\Request\CollectionFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Ui\Component\MassAction\Filter;
 
 class MassReject extends AbstractMassAction
@@ -20,19 +21,27 @@ class MassReject extends AbstractMassAction
     const REJECTED = Status::STATUS_REJECTED;
 
     /**
+     * @var DateTime
+     */
+    protected $dateTime;
+
+    /**
      * MassReject constructor.
      *
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
+     * @param DateTime $dateTime
      */
     public function __construct(
         Context $context,
         Filter $filter,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        DateTime $dateTime
     ) {
         parent::__construct($context, $filter);
         $this->collectionFactory = $collectionFactory;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -41,9 +50,13 @@ class MassReject extends AbstractMassAction
     protected function massAction(AbstractCollection $collection)
     {
         $countRejectRequest = 0;
+        $now = $this->dateTime->gmtDate();
+
         foreach ($collection->getItems() as $request) {
             $request->setStatus(self::REJECTED);
+            $request->setUpdatedAt($now);
             $request->save();
+            //todo emailSender
             $countRejectRequest++;
         }
 
