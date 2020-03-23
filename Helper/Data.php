@@ -16,6 +16,9 @@ class Data extends AbstractHelper
     const CONFIG_TYPES_OPTIONS = 'rma/settings/types';
     const CONFIG_ALLOWED_ORDERS = 'rma/settings/allowed_orders';
     const CONFIG_POLICY_URL = 'rma/settings/policy_url';
+    const CONFIG_EMAIL_ADMIN = 'rma/email/admin';
+    const CONFIG_EMAIL_SENDER = 'rma/email/sender';
+    const CONFIG_EMAIL_TEMPLATE_NOTIFY = 'rma/email/template_notify';
 
     /**
      * @var ScopeConfigInterface
@@ -74,5 +77,32 @@ class Data extends AbstractHelper
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
         return $this->scopeConfig->getValue(self::CONFIG_POLICY_URL, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailSender()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_SENDER, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailAdmin()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_ADMIN, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailTemplate()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_TEMPLATE_NOTIFY, $storeScope);
     }
 }

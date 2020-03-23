@@ -2,6 +2,8 @@
 
 namespace Cap\Rma\Controller\Customer;
 
+use Cap\Rma\Helper\Data;
+use Cap\Rma\Helper\Email;
 use Cap\Rma\Model\Config\Source\Request\Status as RequestStatus;
 use Cap\Rma\Model\RequestFactory;
 use Exception;
@@ -19,17 +21,33 @@ class Form extends Action
     protected $requestFactory;
 
     /**
+     * @var Email
+     */
+    protected $emailSender;
+
+    /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
      * Form constructor.
      *
      * @param Context $context
      * @param RequestFactory $requestFactory
+     * @param Email $emailSender
+     * @param Data $helper
      */
     public function __construct(
         Context $context,
-        RequestFactory $requestFactory
+        RequestFactory $requestFactory,
+        Email $emailSender,
+        Data $helper
     ) {
         $this->requestFactory = $requestFactory;
         parent::__construct($context);
+        $this->emailSender = $emailSender;
+        $this->helper = $helper;
     }
 
     /**
@@ -58,9 +76,18 @@ class Form extends Action
             $model->setStatus(RequestStatus::STATUS_PENDING);
             $model->save();
 
-            $requestId = $model->getRequestId();
-            $this->messageManager->addSuccessMessage(__('You\'re request number #%1 have been submitted.', $requestId));
-
+            try {
+                $this->sendEmail();
+                $requestId = $model->getRequestId();
+                $this->messageManager->addSuccessMessage(__(
+                    'You\'re request number #%1 have been submitted.',
+                    $requestId
+                ));
+            } catch (Exception $e) {
+                $this->messageManager->addErrorMessage($e->getMessage());
+                $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+                $resultRedirect->setUrl('/rma/customer/dashboard');
+            }
             $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
             $resultRedirect->setUrl('/rma/customer/dashboard');
 
@@ -71,5 +98,33 @@ class Form extends Action
         $this->_view->renderLayout();
 
         //todo: fix missing return statement
+    }
+
+    protected function sendEmail()
+    {
+        $emailTemplate = $this->helper->getConfigEmailTemplate();
+        $adminEmail = $this->helper->getConfigEmailAdmin();
+        $adminEmails = explode(',', $adminEmail);
+        $countEmail = count($adminEmails);
+        if ($countEmail > 1) {
+            foreach ($adminEmails as $value) {
+                $value = str_replace(' ', '', $value);
+                $emailTemplateData = [
+                    'adminEmail' => $value,
+//                    'incrementId' => $orderData->getIncrementId(),
+//                    'customerName' => $orderData->getCustomerName(),
+//                    'createdAt' => $orderData->getCreatedAt(),
+                ];
+                $this->emailSender->sendEmail($value, $emailTemplate, $emailTemplateData);
+            }
+        } else {
+            $emailTemplateData = [
+                'adminEmail' => $adminEmail,
+//                'incrementId' => $orderData->getIncrementId(),
+//                'customerName' => $orderData->getCustomerName(),
+//                'createdAt' => $orderData->getCreatedAt(),
+            ];
+            $this->emailSender->sendEmail($adminEmail, $emailTemplate, $emailTemplateData);
+        }
     }
 }
