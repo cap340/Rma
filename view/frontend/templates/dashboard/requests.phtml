@@ -38,8 +38,24 @@
                     <?php endif ?>
                 </td>
                 <td data-th="<?php echo $block->escapeHtml(__('Details')) ?>" class="col details">
-                    <?php //todo customer request view page ?>
-                    <a href=""><?php /* @escapeNotVerified */ echo __('view'); ?></a>
+                    <button type="button" class="action" data-trigger="trigger-<?php echo $request->getRequestId(); ?>">
+                        <span data-bind="i18n: 'details'"></span>
+                    </button>
+                    <div data-bind="mageInit: {
+                        'Magento_Ui/js/modal/modal':{
+                            'type': 'popup',
+                            'title': 'Request #<?php echo $request->getRequestId(); ?>',
+                            'trigger': '[data-trigger=trigger-<?php echo $request->getRequestId(); ?>]',
+                            'responsive': true,
+                            'buttons': [{
+                                text: jQuery.mage.__('Submit'),
+                                class: 'action'
+                            }]
+                        }}">
+                        <div class="content">
+                            <?php echo $request->getRequestId(); ?>
+                        </div>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>
