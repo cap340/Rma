@@ -2,6 +2,7 @@
 
 namespace Cap\Rma\Controller\Customer;
 
+use Cap\Rma\Model\Config\Source\Request\Status as RequestStatus;
 use Cap\Rma\Model\RequestFactory;
 use Exception;
 use Magento\Framework\App\Action\Action;
@@ -54,6 +55,7 @@ class Form extends Action
                 $model->setType($post['requestType']);
             }
             $model->setDescription($post['description']);
+            $model->setStatus(RequestStatus::STATUS_PENDING);
             $model->save();
 
             $requestId = $model->getRequestId();
