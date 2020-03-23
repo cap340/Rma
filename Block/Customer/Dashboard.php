@@ -98,7 +98,7 @@ class Dashboard extends Template
     /**
      * @return array
      */
-    public function getConfigTypesValue()
+    public function getTypes()
     {
         $options = $this->helper->getConfigRequestTypes();
         $options = explode(',', $options);
@@ -107,7 +107,10 @@ class Dashboard extends Template
         $types = [];
         foreach ($values as $key => $value) {
             if (in_array($key, $options)) {
-                $types[] = $value['label']->getText();
+                $types[] = [
+                    'value' => $value['value'],
+                    'label' => $value['label']->getText()
+                ];
             }
         }
         return $types;
