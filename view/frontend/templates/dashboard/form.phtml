@@ -11,7 +11,12 @@
 
 <div class="box box-rma-form">
     <div class="box-content">
-        <form id="rma-form" class="form" action="<?php echo $block->getFormAction() ?>" method="post">
+        <?php $_objectManager = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+        <?php $FormKey = $_objectManager->get('Magento\Framework\Data\Form\FormKey'); ?>
+        <form id="rma-form" class="form" action="<?php echo $block->getFormAction() ?>" method="post"
+              data-hasrequired="<?php $block->escapeHtml(__('* Required Fields')) ?>"
+              data-mage-init='{"validation":{}}'>
+            <input name="form_key" type="hidden" value="<?php echo $FormKey->getFormKey();?>">
             <fieldset class="fieldset">
                 <div class="field name">
                     <label class="label" for="customerName"><?php /* @escapeNotVerified */ echo __('Name'); ?>&nbsp;</label>
@@ -42,8 +47,7 @@
                 <?php if ($block->getTypesEnable()): ?>
                     <?php $types = $block->getTypesOptions(); ?>
                     <div class="field request-type required">
-                        <label class="label" for="requestType"><?php /* @escapeNotVerified */
-                            echo __('Request Type'); ?></label>
+                        <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
                         <div class="control">
                             <select id="requestType" name="requestType">
                                 <option value="" selected disabled hidden></option>

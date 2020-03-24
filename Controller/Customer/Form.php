@@ -12,6 +12,8 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Data\Form\FormKey\Validator;
+use Magento\Framework\Stdlib\DateTime\DateTime;
 
 class Form extends Action
 {
@@ -31,23 +33,39 @@ class Form extends Action
     protected $helper;
 
     /**
+     * @var Validator
+     */
+    protected $formKeyValidator;
+
+    /**
+     * @var DateTime
+     */
+    protected $dateTime;
+
+    /**
      * Form constructor.
      *
      * @param Context $context
      * @param RequestFactory $requestFactory
      * @param Email $emailSender
      * @param Data $helper
+     * @param Validator $formKeyValidator
+     * @param DateTime $dateTime
      */
     public function __construct(
         Context $context,
         RequestFactory $requestFactory,
         Email $emailSender,
-        Data $helper
+        Data $helper,
+        Validator $formKeyValidator,
+        DateTime $dateTime
     ) {
         $this->requestFactory = $requestFactory;
         parent::__construct($context);
         $this->emailSender = $emailSender;
         $this->helper = $helper;
+        $this->formKeyValidator = $formKeyValidator;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -56,11 +74,12 @@ class Form extends Action
      */
     public function execute()
     {
-        //todo: formKey validator
-//        if (!$this->formKeyValidator->validate($this->getRequest())) {
-//            $this->messageManager->addErrorMessage("Invalid request!");
-//            return $resultRedirect->setPath('customer/account/');
-//        }
+        $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+        if (!$this->formKeyValidator->validate($this->getRequest())) {
+            $this->messageManager->addErrorMessage('Invalid request!');
+            return $resultRedirect->setUrl('dashboard');
+        }
+
         $post = (array)$this->getRequest()->getPost();
 
         //todo: required fields
@@ -76,32 +95,35 @@ class Form extends Action
             $model->setStatus(RequestStatus::STATUS_PENDING);
             $model->save();
 
+            $data = $post;
+            $data['requestId'] = $model->getRequestId();
+            $data['createdAt'] = $this->dateTime->gmtDate();
             try {
-                $this->sendEmail();
-                $requestId = $model->getRequestId();
-                $this->messageManager->addSuccessMessage(__(
-                    'You\'re request number #%1 have been submitted.',
-                    $requestId
-                ));
+                $this->sendEmail($data);
+                $this->messageManager->addSuccessMessage(
+                    __('You\'re request number #%1 have been submitted.', $data['requestId'])
+                );
+                $resultRedirect->setUrl('dashboard');
+                return $resultRedirect;
             } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
-                $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-                $resultRedirect->setUrl('/rma/customer/dashboard');
+                $resultRedirect->setUrl('dashboard');
             }
-            $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-            $resultRedirect->setUrl('/rma/customer/dashboard');
-
+            $resultRedirect->setUrl('dashboard');
             return $resultRedirect;
         }
 
         $this->_view->loadLayout();
         $this->_view->renderLayout();
-
         //todo: fix missing return statement
     }
 
-    protected function sendEmail()
+    /**
+     * @param $data
+     */
+    protected function sendEmail($data)
     {
+        //todo: if isset requestType in email subject
         $emailTemplate = $this->helper->getConfigEmailTemplate();
         $adminEmail = $this->helper->getConfigEmailAdmin();
         $adminEmails = explode(',', $adminEmail);
@@ -111,18 +133,22 @@ class Form extends Action
                 $value = str_replace(' ', '', $value);
                 $emailTemplateData = [
                     'adminEmail' => $value,
-//                    'incrementId' => $orderData->getIncrementId(),
-//                    'customerName' => $orderData->getCustomerName(),
-//                    'createdAt' => $orderData->getCreatedAt(),
+                    'requestId' => $data['requestId'],
+                    'incrementId' => $data['orderIncrementId'],
+                    'customerName' => $data['customerName'],
+                    'description' => $data['description'],
+                    'createdAt' => $data['createdAt'],
                 ];
                 $this->emailSender->sendEmail($value, $emailTemplate, $emailTemplateData);
             }
         } else {
             $emailTemplateData = [
                 'adminEmail' => $adminEmail,
-//                'incrementId' => $orderData->getIncrementId(),
-//                'customerName' => $orderData->getCustomerName(),
-//                'createdAt' => $orderData->getCreatedAt(),
+                'requestId' => $data['requestId'],
+                'incrementId' => $data['orderIncrementId'],
+                'customerName' => $data['customerName'],
+                'description' => $data['description'],
+                'createdAt' => $data['createdAt'],
             ];
             $this->emailSender->sendEmail($adminEmail, $emailTemplate, $emailTemplateData);
         }
