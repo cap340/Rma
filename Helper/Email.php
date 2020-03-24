@@ -107,4 +107,49 @@ class Email extends AbstractHelper
             return;
         }
     }
+
+    /**
+     * @param $data
+     */
+    public function sendEmailAdmin($data)
+    {
+        //todo: if isset requestType in email subject
+        $emailTemplate = $this->helper->getConfigEmailTemplateAdmin();
+        $adminEmail = $this->helper->getConfigEmailAdmin();
+        $adminEmails = explode(',', $adminEmail);
+        $countEmail = count($adminEmails);
+        if ($countEmail > 1) {
+            foreach ($adminEmails as $value) {
+                $value = str_replace(' ', '', $value);
+                $emailTemplateData = [
+                    'adminEmail' => $value,
+                    'requestId' => $data['requestId'],
+                    'incrementId' => $data['orderIncrementId'],
+                    'customerName' => $data['customerName'],
+                    'description' => $data['description'],
+                    'createdAt' => $data['createdAt'],
+                ];
+                $this->sendEmail($value, $emailTemplate, $emailTemplateData);
+            }
+        } else {
+            $emailTemplateData = [
+                'adminEmail' => $adminEmail,
+                'requestId' => $data['requestId'],
+                'incrementId' => $data['orderIncrementId'],
+                'customerName' => $data['customerName'],
+                'description' => $data['description'],
+                'createdAt' => $data['createdAt'],
+            ];
+            $this->sendEmail($adminEmail, $emailTemplate, $emailTemplateData);
+        }
+    }
+
+    /**
+     * @param $data
+     */
+    public function sendEmailCustomer($data)
+    {
+        //todo: if isset requestType in email subject
+        $emailTemplate = $this->helper->getConfigEmailTemplateCustomer();
+    }
 }

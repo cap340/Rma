@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="rma_email_template_notify" label="Notify Email Template" file="admin_request_email.html" type="html" module="Cap_Rma" area="frontend"/>
-    <template id="rma_email_template_accepted" label="Accepted Email Template" file="accepted_email.html" type="html" module="Cap_Rma" area="frontend"/>
-    <template id="rma_email_template_rejected" label="Rejected Email Template" file="rejected_email.html" type="html" module="Cap_Rma" area="frontend"/>
+    <template id="rma_email_template_admin" label="Admin Notifications Template" file="admin_notify.html" type="html" module="Cap_Rma" area="frontend"/>
+    <template id="rma_email_template_customer" label="Customer Notifications Template" file="customer_notify.html" type="html" module="Cap_Rma" area="frontend"/>
+    <template id="rma_email_template_accepted" label="Accepted Template" file="accepted.html" type="html" module="Cap_Rma" area="frontend"/>
+    <template id="rma_email_template_rejected" label="Rejected Template" file="rejected.html" type="html" module="Cap_Rma" area="frontend"/>
 </config>

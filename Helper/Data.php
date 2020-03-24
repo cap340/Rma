@@ -18,7 +18,10 @@ class Data extends AbstractHelper
     const CONFIG_POLICY_URL = 'rma/settings/policy_url';
     const CONFIG_EMAIL_ADMIN = 'rma/email/admin';
     const CONFIG_EMAIL_SENDER = 'rma/email/sender';
-    const CONFIG_EMAIL_TEMPLATE_NOTIFY = 'rma/email/template_notify';
+    const CONFIG_EMAIL_TEMPLATE_ADMIN = 'rma/email/template_admin';
+    const CONFIG_EMAIL_TEMPLATE_CUSTOMER = 'rma/email/template_customer';
+    const CONFIG_EMAIL_TEMPLATE_ACCEPTED = 'rma/email/template_accepted';
+    const CONFIG_EMAIL_TEMPLATE_REJECTED = 'rma/email/template_rejected';
 
     /**
      * @var ScopeConfigInterface
@@ -100,9 +103,36 @@ class Data extends AbstractHelper
     /**
      * @return mixed
      */
-    public function getConfigEmailTemplate()
+    public function getConfigEmailTemplateAdmin()
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
-        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_TEMPLATE_NOTIFY, $storeScope);
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_TEMPLATE_ADMIN, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailTemplateCustomer()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_TEMPLATE_CUSTOMER, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailTemplateAccepted()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_TEMPLATE_ACCEPTED, $storeScope);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailTemplateRejected()
+    {
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        return $this->scopeConfig->getValue(self::CONFIG_EMAIL_TEMPLATE_REJECTED, $storeScope);
     }
 }

@@ -99,7 +99,7 @@ class Form extends Action
             $data['requestId'] = $model->getRequestId();
             $data['createdAt'] = $this->dateTime->gmtDate();
             try {
-                $this->sendEmail($data);
+                $this->emailSender->sendEmailAdmin($data);
                 $this->messageManager->addSuccessMessage(
                     __('You\'re request number #%1 have been submitted.', $data['requestId'])
                 );
@@ -116,41 +116,5 @@ class Form extends Action
         $this->_view->loadLayout();
         $this->_view->renderLayout();
         //todo: fix missing return statement
-    }
-
-    /**
-     * @param $data
-     */
-    protected function sendEmail($data)
-    {
-        //todo: if isset requestType in email subject
-        $emailTemplate = $this->helper->getConfigEmailTemplate();
-        $adminEmail = $this->helper->getConfigEmailAdmin();
-        $adminEmails = explode(',', $adminEmail);
-        $countEmail = count($adminEmails);
-        if ($countEmail > 1) {
-            foreach ($adminEmails as $value) {
-                $value = str_replace(' ', '', $value);
-                $emailTemplateData = [
-                    'adminEmail' => $value,
-                    'requestId' => $data['requestId'],
-                    'incrementId' => $data['orderIncrementId'],
-                    'customerName' => $data['customerName'],
-                    'description' => $data['description'],
-                    'createdAt' => $data['createdAt'],
-                ];
-                $this->emailSender->sendEmail($value, $emailTemplate, $emailTemplateData);
-            }
-        } else {
-            $emailTemplateData = [
-                'adminEmail' => $adminEmail,
-                'requestId' => $data['requestId'],
-                'incrementId' => $data['orderIncrementId'],
-                'customerName' => $data['customerName'],
-                'description' => $data['description'],
-                'createdAt' => $data['createdAt'],
-            ];
-            $this->emailSender->sendEmail($adminEmail, $emailTemplate, $emailTemplateData);
-        }
     }
 }
