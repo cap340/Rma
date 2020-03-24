@@ -124,7 +124,7 @@ class Email extends AbstractHelper
                 $emailTemplateData = [
                     'adminEmail' => $value,
                     'requestId' => $data['requestId'],
-                    'incrementId' => $data['orderIncrementId'],
+                    'orderIncrementId' => $data['orderIncrementId'],
                     'customerName' => $data['customerName'],
                     'description' => $data['description'],
                     'createdAt' => $data['createdAt'],
@@ -135,7 +135,7 @@ class Email extends AbstractHelper
             $emailTemplateData = [
                 'adminEmail' => $adminEmail,
                 'requestId' => $data['requestId'],
-                'incrementId' => $data['orderIncrementId'],
+                'orderIncrementId' => $data['orderIncrementId'],
                 'customerName' => $data['customerName'],
                 'description' => $data['description'],
                 'createdAt' => $data['createdAt'],
@@ -156,7 +156,7 @@ class Email extends AbstractHelper
         $emailTemplateData = [
             'customerEmail' => $customerEmail,
             'requestId' => $data['requestId'],
-            'incrementId' => $data['orderIncrementId'],
+            'orderIncrementId' => $data['orderIncrementId'],
             'customerName' => $data['customerName'],
             'description' => $data['description'],
             'createdAt' => $data['createdAt'],
