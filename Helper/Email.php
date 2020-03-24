@@ -71,7 +71,7 @@ class Email extends AbstractHelper
      * @param $emailTemplate
      * @param $templateVar
      */
-    public function sendEmail($receivers, $emailTemplate, $templateVar)
+    private function sendEmail($receivers, $emailTemplate, $templateVar)
     {
         try {
             $email = $this->helper->getConfigEmailSender();
@@ -109,9 +109,9 @@ class Email extends AbstractHelper
     }
 
     /**
-     * @param $data
+     * @param $emailData
      */
-    public function sendEmailAdmin($data)
+    public function sendEmailAdmin($emailData)
     {
         //todo: if isset requestType in email subject
         $emailTemplate = $this->helper->getConfigEmailTemplateAdmin();
@@ -123,44 +123,60 @@ class Email extends AbstractHelper
                 $value = str_replace(' ', '', $value);
                 $emailTemplateData = [
                     'adminEmail' => $value,
-                    'requestId' => $data['requestId'],
-                    'orderIncrementId' => $data['orderIncrementId'],
-                    'customerName' => $data['customerName'],
-                    'description' => $data['description'],
-                    'createdAt' => $data['createdAt'],
+                    'requestId' => $emailData['requestId'],
+                    'orderIncrementId' => $emailData['orderIncrementId'],
+                    'customerName' => $emailData['customerName'],
+                    'description' => $emailData['description'],
+                    'createdAt' => $emailData['createdAt'],
                 ];
                 $this->sendEmail($value, $emailTemplate, $emailTemplateData);
             }
         } else {
             $emailTemplateData = [
                 'adminEmail' => $adminEmail,
-                'requestId' => $data['requestId'],
-                'orderIncrementId' => $data['orderIncrementId'],
-                'customerName' => $data['customerName'],
-                'description' => $data['description'],
-                'createdAt' => $data['createdAt'],
+                'requestId' => $emailData['requestId'],
+                'orderIncrementId' => $emailData['orderIncrementId'],
+                'customerName' => $emailData['customerName'],
+                'description' => $emailData['description'],
+                'createdAt' => $emailData['createdAt'],
             ];
             $this->sendEmail($adminEmail, $emailTemplate, $emailTemplateData);
         }
     }
 
     /**
-     * @param $data
+     * @param $emailData
+     * @param $emailTemplate
      */
-    public function sendEmailCustomer($data)
+    public function sendEmailCustomer($emailData, $emailTemplate)
     {
         //todo: if isset requestType in email subject
-        $emailTemplate = $this->helper->getConfigEmailTemplateCustomer();
-        $customerEmail = $data['customerEmail'];
+        $customerEmail = $emailData['customerEmail'];
 
         $emailTemplateData = [
             'customerEmail' => $customerEmail,
-            'requestId' => $data['requestId'],
-            'orderIncrementId' => $data['orderIncrementId'],
-            'customerName' => $data['customerName'],
-            'description' => $data['description'],
-            'createdAt' => $data['createdAt'],
+            'requestId' => $emailData['requestId'],
+            'orderIncrementId' => $emailData['orderIncrementId'],
+            'customerName' => $emailData['customerName'],
+            'description' => $emailData['description'],
+            'createdAt' => $emailData['createdAt'],
         ];
         $this->sendEmail($customerEmail, $emailTemplate, $emailTemplateData);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailTemplateAccepted()
+    {
+        return $this->helper->getConfigEmailTemplateAccepted();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigEmailTemplateRejected()
+    {
+        return $this->helper->getConfigEmailTemplateRejected();
     }
 }

@@ -95,14 +95,15 @@ class Form extends Action
             $model->setStatus(RequestStatus::STATUS_PENDING);
             $model->save();
 
-            $data = $post;
-            $data['requestId'] = $model->getRequestId();
-            $data['createdAt'] = $this->dateTime->gmtDate();
+            $emailData = $post;
+            $emailData['requestId'] = $model->getRequestId();
+            $emailData['createdAt'] = $this->dateTime->gmtDate();
             try {
-                $this->emailSender->sendEmailAdmin($data);
-                $this->emailSender->sendEmailCustomer($data);
+                $this->emailSender->sendEmailAdmin($emailData);
+                $emailTemplate = $this->helper->getConfigEmailTemplateCustomer();
+                $this->emailSender->sendEmailCustomer($emailData, $emailTemplate);
                 $this->messageManager->addSuccessMessage(
-                    __('You\'re request number #%1 have been submitted.', $data['requestId'])
+                    __('You\'re request number #%1 have been submitted.', $emailData['requestId'])
                 );
                 $resultRedirect->setUrl('dashboard');
                 return $resultRedirect;

@@ -13,10 +13,10 @@
     </tr>
     <tr class="email-summary" style="font-family: Roboto; font-size: 17px;">
         <td style="padding-bottom: 20px;">
-            <b>{{trans "Order ID "}}</b>{{trans "#%incrementId" incrementId=$incrementId}}<br>
-            <b>{{trans "Request ID "}}</b>{{trans "#%id" id=$id}}<br>
+            <b>{{trans "Order ID "}}</b>{{trans "#%orderIncrementId" orderIncrementId=$orderIncrementId}}<br>
+            <b>{{trans "Request ID "}}</b>{{trans "#%requestId" requestId=$requestId}}<br>
             <hr style="margin-bottom: 5px; margin-top: 5px;">
-            <p>{{trans 'Accepted at %timeApproved ' timeApproved=$timeApproved}}</p>
+<!--            <p>{{trans 'Rejected at %timeApproved ' timeApproved=$timeApproved}}</p>-->
         </td>
     </tr>
     <tr class="email-information" style="font-family: Roboto; font-size: 17px;">
@@ -24,7 +24,7 @@
             <p>Please accept our sincere apology for the inconvenience. We will process your request as soon as possible.<br>
             Have a good day!
             </p>
-            <center><img src="{{view url='Cap_Rma/images/thanks.png'}}" alt="{{trans 'Thanks'}}" /></center>
+<!--            <center><img src="{{view url='Cap_Rma/images/thanks.png'}}" alt="{{trans 'Thanks'}}" /></center>-->
             <center><p>Thank you!</p></center>
         </td>
     </tr>
