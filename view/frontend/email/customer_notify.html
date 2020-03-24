@@ -3,7 +3,8 @@
 <table width="100%">
     <tr class="email-intro">
         <td>
-            <p class="greeting">{{trans "Hello %adminEmail," adminEmail=$adminEmail}}</p>
+            <p class="greeting">{{trans "Hello %customerName," customerName=$customerName}}</p>
+            <!-- todo customer email notification text -->
             <p>{{trans "You have a new request from %store_name." store_name=$store.getFrontendName()}}</p>
         </td>
     </tr>
@@ -11,7 +12,6 @@
         <td>
             <h3>{{trans "Request"}} <span style="font-weight: bold">{{trans "#%requestId" requestId=$requestId}}</span></h3>
             <p>{{trans "Order"}} <span style="font-weight: bold">{{trans "#%incrementId" incrementId=$incrementId}}</span></p>
-            <p>{{trans "Customer Name: "}}{{trans "%customerName" customerName=$customerName}}</span></p>
             <p>{{trans "Description: "}}{{trans "%description" description=$description}}</p>
             <p>{{trans 'Request created at: %createdAt GMT' createdAt=$createdAt}}</p>
         </td>

@@ -151,5 +151,16 @@ class Email extends AbstractHelper
     {
         //todo: if isset requestType in email subject
         $emailTemplate = $this->helper->getConfigEmailTemplateCustomer();
+        $customerEmail = $data['customerEmail'];
+
+        $emailTemplateData = [
+            'customerEmail' => $customerEmail,
+            'requestId' => $data['requestId'],
+            'incrementId' => $data['orderIncrementId'],
+            'customerName' => $data['customerName'],
+            'description' => $data['description'],
+            'createdAt' => $data['createdAt'],
+        ];
+        $this->sendEmail($customerEmail, $emailTemplate, $emailTemplateData);
     }
 }

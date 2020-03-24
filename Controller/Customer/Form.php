@@ -100,6 +100,7 @@ class Form extends Action
             $data['createdAt'] = $this->dateTime->gmtDate();
             try {
                 $this->emailSender->sendEmailAdmin($data);
+                $this->emailSender->sendEmailCustomer($data);
                 $this->messageManager->addSuccessMessage(
                     __('You\'re request number #%1 have been submitted.', $data['requestId'])
                 );
