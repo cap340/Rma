@@ -46,6 +46,18 @@
 		<columnsControls name="columns_controls"/>
 		<exportButton name="export_button"/>
 		<filters name="listing_filters"/>
+		<filterSearch name="fulltext">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="provider" xsi:type="string">cap_rma_request_listing.cap_rma_request_grid_data_source</item>
+					<item name="chipsProvider" xsi:type="string">cap_rma_request_listing.cap_rma_request_listing.listing_top.listing_filters_chips</item>
+					<item name="storageConfig" xsi:type="array">
+						<item name="provider" xsi:type="string">cap_rma_request_listing.cap_rma_request_listing.listing_top.bookmarks</item>
+						<item name="namespace" xsi:type="string">current.search</item>
+					</item>
+				</item>
+			</argument>
+		</filterSearch>
 		<massaction name="listing_massaction">
 			<action name="accept">
 				<argument name="data" xsi:type="array">
