@@ -1,0 +1,36 @@
+<?php /** @noinspection PhpFullyQualifiedNameUsageInspection */
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Cap\Rma\Block\Customer\History $block */
+?>
+
+<?php $requests = $block->getRequestsHistory(); ?>
+<?php if($requests && count($requests)): ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items orders-history" id="requests-table">
+            <caption class="caption"><?php echo __('Records'); ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?php echo __('ID'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php /** @var \Cap\Rma\Model\Request $request */ ?>
+                <?php foreach ($requests as $request): ?>
+                    <tr>
+                        <td><?php echo $request->getRequestId(); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom">
+            <?php echo $block->getPagerHtml(); ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,9 +1,15 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-cap-rma-request">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-cap-rma-request" after="-">
                 <arguments>
-                    <argument name="path" xsi:type="string">rma/customer/dashboard</argument>
+                    <argument name="path" xsi:type="string">rma/customer/request</argument>
+                    <argument name="label" xsi:type="string">Return Request</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-cap-rma-request-history" after="-">
+                <arguments>
+                    <argument name="path" xsi:type="string">rma/customer/history</argument>
                     <argument name="label" xsi:type="string">My Requests</argument>
                 </arguments>
             </block>
