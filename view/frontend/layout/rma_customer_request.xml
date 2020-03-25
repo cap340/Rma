@@ -7,7 +7,7 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block class="Cap\Rma\Block\Customer\Request" name="rma.request" template="request.phtml"/>
+            <block class="Cap\Rma\Block\Customer\Request" name="rma.request" template="Cap_Rma::request.phtml"/>
         </referenceContainer>
     </body>
 </page>

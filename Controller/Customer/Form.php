@@ -105,13 +105,13 @@ class Form extends Action
                 $this->messageManager->addSuccessMessage(
                     __('You\'re request number #%1 have been submitted.', $emailData['requestId'])
                 );
-                $resultRedirect->setUrl('dashboard');
+                $resultRedirect->setUrl('history');
                 return $resultRedirect;
             } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
-                $resultRedirect->setUrl('dashboard');
+                $resultRedirect->setUrl('history');
             }
-            $resultRedirect->setUrl('dashboard');
+            $resultRedirect->setUrl('history');
             return $resultRedirect;
         }
 

@@ -5,7 +5,135 @@
  */
 
 // @codingStandardsIgnoreFile
-/** @var \Cap\Rma\Block\Customer\History $block */
+/** @var \Cap\Rma\Block\Customer\Request $block */
 ?>
 
-<h1>FORM</h1>
+<?php if ($block->isLoggedIn()): ?>
+    <div class="block block-dashboard-rma-requests">
+        <div class="block-content">
+            <?php $orders = $block->getOrdersCanRequest(); ?>
+            <?php if ($orders && count($orders)): ?>
+                <?php // Form ?>
+                <div class="box box-rma-request-form">
+                    <div class="box-content">
+                        <?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+                        <?php $FormKey = $objectManager->get('Magento\Framework\Data\Form\FormKey'); ?>
+                        <form id="rma-form" class="form" action="<?php echo $block->getFormAction() ?>" method="post"
+                              data-hasrequired="<?php $block->escapeHtml(__('* Required Fields')) ?>"
+                              data-mage-init='{"validation":{}}'>
+                            <input name="form_key" type="hidden" value="<?php echo $FormKey->getFormKey();?>">
+                            <fieldset class="fieldset">
+                                <div class="field name">
+                                    <label class="label" for="customerName"><?php /* @escapeNotVerified */ echo __('Name'); ?>&nbsp;</label>
+                                    <a href="<?php echo $block->escapeUrl($block->getCustomerEditLink()); ?>"><?php echo $block->escapeHtml($block->getCustomerName()) ?></a>
+                                    <input type="hidden" class="hidden" name="customerName" value="<?php echo $block->escapeHtml($block->getCustomerName()) ?>"/>
+                                </div>
+
+                                <div class="field email">
+                                    <label class="label" for="customerEmail"><?php /* @escapeNotVerified */ echo __('Email'); ?>&nbsp;</label>
+                                    <a href="<?php echo $block->escapeUrl($block->getCustomerEditLink()); ?>"><?php echo $block->escapeHtml($block->getCustomerEmail()) ?></a>
+                                    <input type="hidden" name="customerEmail" value="<?php echo $block->escapeHtml($block->getCustomerEmail()) ?>"/>
+                                </div>
+
+                                <div class="field order required">
+                                    <label class="label" for="orderIncrementId"><?php /* @escapeNotVerified */ echo __('Order'); ?></label>
+                                    <div class="control">
+                                        <select id="orderIncrementId" name="orderIncrementId">
+                                            <option value="" selected disabled hidden></option>
+                                            <?php /** @var \Magento\Sales\Model\Order $order */ ?>
+                                            <?php foreach ($orders as $order): ?>
+                                                <option value="<?php echo $block->escapeHtml($order->getIncrementId()); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <?php if ($block->getTypesEnable()): ?>
+                                    <?php $types = $block->getTypesOptions(); ?>
+                                    <div class="field request-type required">
+                                        <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
+                                        <div class="control">
+                                            <select id="requestType" name="requestType">
+                                                <option value="" selected disabled hidden></option>
+                                                <?php foreach ($types as $type): ?>
+                                                    <option value="<?php echo $block->escapeHtml(__($type['value'])); ?>"><?php echo $block->escapeHtml(__($type['label'])); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php endif ?>
+
+                                <div class="field description required">
+                                    <label class="label" for="description"><?php /* @escapeNotVerified */ echo __('Details'); ?></label>
+                                    <div class="control">
+                                        <textarea name="description" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="actions-toolbar">
+                                <div class="primary">
+                                    <button type="submit" class="action send primary" title="<?php echo __('Send'); ?>">
+                                        <span><?php echo /* @escapeNotVerified */ __('Submit'); ?></span>
+                                    </button>
+                                </div>
+                                <div class="secondary">
+                                    <button type="reset" class="action reset secondary" title="<?php echo __('Reset'); ?>">
+                                        <span><?php echo /* @escapeNotVerified */ __('Reset'); ?></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <?php // Orders ?>
+                <div class="box box-rma-request-orders">
+                    <strong class="box-title"><?php /* @escapeNotVerified */ echo __('My Orders'); ?></strong>
+                    <div class="box-content">
+                        <span><?php /* @escapeNotVerified */ echo __('Orders that meet the request conditions.'); ?></span>
+                        <?php if ($block->getPolicyLink()): ?>
+                            <span> (<a href="<?php echo $block->escapeUrl($block->getPolicyLink()); ?>"><?php /* @escapeNotVerified */ echo __('Return Policy'); ?></a>)</span>
+                        <?php endif ?>
+                    </div>
+                    <div class="table-wrapper rma-orders-history">
+                        <table class="data table table-order-items history" id="rma-orders-table">
+                            <caption class="table-caption"><?php echo $block->escapeHtml(__('Orders')) ?></caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col id"><?php echo $block->escapeHtml(__('Order #')) ?></th>
+                                    <th scope="col" class="col date"><?php echo $block->escapeHtml(__('Date')) ?></th>
+                                    <th scope="col" class="col total"><?php echo $block->escapeHtml(__('Total')) ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php /** @var \Magento\Sales\Model\Order $order */ ?>
+                                <?php foreach ($orders as $order): ?>
+                                    <tr>
+                                        <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id">
+                                            <a href="<?php echo $block->escapeUrl($block->getOrderLink($order)); ?>"><?php /* @escapeNotVerified */ echo $order->getIncrementId(); ?></a>
+                                        </td>
+                                        <td data-th="<?php echo $block->escapeHtml(__('Date #')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($order->getCreatedAt()) ?></td>
+                                        <td data-th="<?php echo $block->escapeHtml(__('Total #')) ?>" class="col total"><?php /* @escapeNotVerified */ echo $order->formatPrice($order->getGrandTotal()) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="message info">
+                    <div>
+                        <?php /* @escapeNotVerified */ echo __('You have no order that meets the request conditions.'); ?>
+                        <?php if($block->getPolicyLink()): ?>
+                            <span> <a href="<?php echo $block->escapeUrl($block->getPolicyLink()); ?>" title="<?php $block->escapeHtml(__('Return Policy')) ?>"><?php /* @escapeNotVerified */ echo __('Return Policy'); ?></a></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="message error">
+        <div><?php /* @escapeNotVerified */ echo __('You must be logged in'); ?></div>
+    </div>
+<?php endif; ?>
