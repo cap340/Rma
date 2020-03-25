@@ -8,29 +8,84 @@
 /** @var \Cap\Rma\Block\Customer\History $block */
 ?>
 
-<?php $requests = $block->getRequestsHistory(); ?>
-<?php if($requests && count($requests)): ?>
-    <div class="table-wrapper orders-history">
-        <table class="data table table-order-items orders-history" id="requests-table">
-            <caption class="caption"><?php echo __('Records'); ?></caption>
-            <thead>
-                <tr>
-                    <th scope="col" class="col id"><?php echo __('ID'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php /** @var \Cap\Rma\Model\Request $request */ ?>
-                <?php foreach ($requests as $request): ?>
-                    <tr>
-                        <td><?php echo $request->getRequestId(); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php if ($block->getPagerHtml()): ?>
-        <div class="order-products-toolbar toolbar bottom">
-            <?php echo $block->getPagerHtml(); ?>
+<?php if ($block->isLoggedIn()): ?>
+    <div class="block block-dashboard-rma-history">
+        <div class="block-content">
+            <?php $requests = $block->getRequestsHistory(); ?>
+            <?php if($requests && count($requests)): ?>
+                <div class="table-wrapper rma-request-history">
+                    <table class="data table table-request-items history" id="rma-requests-table">
+                        <caption class="table-caption"><?php echo $block->escapeHtml(__('Orders')) ?></span></caption>
+                        <thead>
+                        <tr>
+                            <th scope="col" class="col id"><?php echo $block->escapeHtml(__('Request #')) ?></th>
+                            <th scope="col" class="col status"><?php echo $block->escapeHtml(__('Status')) ?></th>
+                            <th scope="col" class="col date"><?php echo $block->escapeHtml(__('Date')) ?></th>
+                            <th scope="col" class="col update"><?php echo $block->escapeHtml(__('Updated')) ?></th>
+                            <th scope="col" class="col details"><?php echo $block->escapeHtml(__('Details')) ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php /** @var \Cap\Rma\Model\Request $request */ ?>
+                        <?php foreach ($requests as $request): ?>
+                            <tr>
+                                <td data-th="<?php echo $block->escapeHtml(__('Request #')) ?>" class="col id">
+                                    <?php /* @escapeNotVerified */ echo $request->getRequestId(); ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status">
+                                    <?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getStatusOptionLabel($request->getStatus())); ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getCreatedAt()) ?></td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col update">
+                                    <?php if ($block->checkUpdatedRequest($request)): ?>
+                                        <?php /* @escapeNotVerified */ echo $block->formatDate($request->getUpdatedAt()) ?>
+                                    <?php endif ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Details')) ?>" class="col details">
+                                    <button type="button" class="action" data-trigger="trigger-request<?php echo $request->getRequestId(); ?>">
+                                        <span data-bind="i18n: 'view'"></span>
+                                    </button>
+                                    <div data-bind="mageInit: {
+                                        'Magento_Ui/js/modal/modal':{
+                                            'type': 'popup',
+                                            'title': 'Request #<?php echo $request->getRequestId(); ?>',
+                                            'trigger': '[data-trigger=trigger-request<?php echo $request->getRequestId(); ?>]',
+                                            'responsive': true,
+                                            'buttons': [{
+                                                text: jQuery.mage.__('Ok'),
+                                                class: 'action'
+                                            }]
+                                        }}">
+                                        <div class="content">
+                                            <h4><?php /* @escapeNotVerified */ echo __('Description'); ?></h4>
+                                            <?php echo $block->escapeHtml($request->getDescription()); ?>
+                                            <?php if ($request->getComment()): ?>
+                                                <h4><?php /* @escapeNotVerified */ echo __('Comment'); ?></h4>
+                                                <?php echo $block->escapeHtml($request->getComment()); ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php if ($block->getPagerHtml()): ?>
+                    <div class="order-products-toolbar toolbar bottom">
+                        <?php echo $block->getPagerHtml(); ?>
+                    </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <div class="message notice">
+                    <div><?php /* @escapeNotVerified */ echo __('No Request'); ?></div>
+                </div>
+            <?php endif ?>
         </div>
-    <?php endif; ?>
+    </div>
+<?php else: ?>
+    <div class="message error">
+        <div><?php /* @escapeNotVerified */ echo __('You must be logged in'); ?></div>
+    </div>
 <?php endif; ?>
+
