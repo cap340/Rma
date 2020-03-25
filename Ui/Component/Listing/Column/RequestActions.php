@@ -10,8 +10,8 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class RequestActions extends Column
 {
     const URL_PATH_DELETE = 'cap_rma/request/delete';
-    const URL_PATH_VIEW = 'cap_rma/request/view';
     const URL_PATH_EDIT = 'cap_rma/request/edit';
+    const URL_PATH_PRINT = 'cap_rma/request/pdf';
 
     /**
      * @var UrlInterface
@@ -50,14 +50,14 @@ class RequestActions extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['request_id'])) {
                     $item[$this->getData('name')] = [
-                        'view' => [
+                        'print' => [
                             'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_VIEW,
+                                static::URL_PATH_PRINT,
                                 [
                                     'request_id' => $item['request_id']
                                 ]
                             ),
-                            'label' => __('View')
+                            'label' => __('Print')
                         ],
                         'edit' => [
                             'href' => $this->urlBuilder->getUrl(
