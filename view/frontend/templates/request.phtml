@@ -26,19 +26,19 @@
                                 <div class="field name">
                                     <label class="label" for="customerName"><?php /* @escapeNotVerified */ echo __('Name'); ?>&nbsp;</label>
                                     <a href="<?php echo $block->escapeUrl($block->getCustomerEditLink()); ?>"><?php echo $block->escapeHtml($block->getCustomerName()) ?></a>
-                                    <input type="hidden" class="hidden" name="customerName" value="<?php echo $block->escapeHtml($block->getCustomerName()) ?>"/>
+                                    <input type="hidden" class="hidden" name="customerName" value="<?php echo $block->escapeHtml($block->getCustomerName()) ?>" data-validate="{required:true}"/>
                                 </div>
 
                                 <div class="field email">
                                     <label class="label" for="customerEmail"><?php /* @escapeNotVerified */ echo __('Email'); ?>&nbsp;</label>
                                     <a href="<?php echo $block->escapeUrl($block->getCustomerEditLink()); ?>"><?php echo $block->escapeHtml($block->getCustomerEmail()) ?></a>
-                                    <input type="hidden" name="customerEmail" value="<?php echo $block->escapeHtml($block->getCustomerEmail()) ?>"/>
+                                    <input type="hidden" name="customerEmail" value="<?php echo $block->escapeHtml($block->getCustomerEmail()) ?>" data-validate="{required:true}"/>
                                 </div>
 
                                 <div class="field order required">
                                     <label class="label" for="orderIncrementId"><?php /* @escapeNotVerified */ echo __('Order'); ?></label>
                                     <div class="control">
-                                        <select id="orderIncrementId" name="orderIncrementId">
+                                        <select id="orderIncrementId" name="orderIncrementId" data-validate="{required:true}">
                                             <option value="" selected disabled hidden></option>
                                             <?php /** @var \Magento\Sales\Model\Order $order */ ?>
                                             <?php foreach ($orders as $order): ?>
@@ -53,7 +53,7 @@
                                     <div class="field request-type required">
                                         <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
                                         <div class="control">
-                                            <select id="requestType" name="requestType">
+                                            <select id="requestType" name="requestType" data-validate="{required:true}">
                                                 <option value="" selected disabled hidden></option>
                                                 <?php foreach ($types as $type): ?>
                                                     <option value="<?php echo $block->escapeHtml(__($type['value'])); ?>"><?php echo $block->escapeHtml(__($type['label'])); ?></option>
@@ -66,7 +66,7 @@
                                 <div class="field description required">
                                     <label class="label" for="description"><?php /* @escapeNotVerified */ echo __('Details'); ?></label>
                                     <div class="control">
-                                        <textarea name="description" rows="5"></textarea>
+                                        <textarea name="description" rows="5" data-validate="{required:true, 'min-words':3}"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
