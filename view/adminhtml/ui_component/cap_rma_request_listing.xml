@@ -90,29 +90,6 @@
 		<paging name="listing_paging"/>
 	</listingToolbar>
 	<columns name="cap_rma_request_columns">
-		<argument name="data" xsi:type="array">
-			<item name="config" xsi:type="array">
-				<item name="editorConfig" xsi:type="array">
-					<item name="selectProvider" xsi:type="string">cap_rma_request_listing.cap_rma_request_listing.cap_rma_request_columns.ids</item>
-					<item name="enabled" xsi:type="boolean">true</item>
-					<item name="indexField" xsi:type="string">request_id</item>
-					<item name="clientConfig" xsi:type="array">
-						<item name="saveUrl" path="cap_rma/Request/inlineEdit" xsi:type="url"/>
-						<item name="validateBeforeSave" xsi:type="boolean">false</item>
-					</item>
-				</item>
-				<item name="childDefaults" xsi:type="array">
-					<item name="fieldAction" xsi:type="array">
-						<item name="provider" xsi:type="string">cap_rma_request_listing.cap_rma_request_listing.cap_rma_request_columns_editor</item>
-						<item name="target" xsi:type="string">startEdit</item>
-						<item name="params" xsi:type="array">
-							<item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
-							<item name="1" xsi:type="boolean">true</item>
-						</item>
-					</item>
-				</item>
-			</item>
-		</argument>
 		<selectionsColumn name="ids">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
@@ -123,7 +100,6 @@
 		<column name="request_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="filter" xsi:type="string">textRange</item>
 					<item name="sorting" xsi:type="string">desc</item>
 					<item name="label" translate="true" xsi:type="string">ID</item>
 					<item name="sortOrder" xsi:type="number">10</item>
@@ -147,12 +123,6 @@
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Customer Email</item>
-					<item name="editor" xsi:type="array">
-						<item name="editorType" xsi:type="string">text</item>
-						<item name="validation" xsi:type="array">
-							<item name="required-entry" xsi:type="boolean">true</item>
-						</item>
-					</item>
 					<item name="sortOrder" xsi:type="number">30</item>
 				</item>
 			</argument>
@@ -173,7 +143,6 @@
 			<argument name="data" xsi:type="array">
 				<item name="options" xsi:type="object">Cap\Rma\Model\Config\Source\Request\Types</item>
 				<item name="config" xsi:type="array">
-					<item name="editor" xsi:type="string">select</item>
 					<item name="filter" xsi:type="string">select</item>
 					<item name="label" translate="true" xsi:type="string">Type</item>
 					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
@@ -186,7 +155,6 @@
 			<argument name="data" xsi:type="array">
 				<item name="options" xsi:type="object">Cap\Rma\Model\Config\Source\Request\Status</item>
 				<item name="config" xsi:type="array">
-					<item name="editor" xsi:type="string">select</item>
 					<item name="filter" xsi:type="string">select</item>
 					<item name="label" xsi:type="string" translate="true">Status</item>
 					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>

@@ -10,6 +10,7 @@
 					<resource id="Cap_Rma::request_update" sortOrder="30" title="Update Request"/>
 					<resource id="Cap_Rma::request_view" sortOrder="40" title="View Request"/>
 					<resource id="Cap_Rma::request_edit" sortOrder="50" title="View Request"/>
+					<resource id="Cap_Rma::request_print" sortOrder="60" title="Print Request"/>
 				</resource>
 			</resource>
 		</resources>

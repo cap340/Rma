@@ -13,29 +13,36 @@ use Zend_Pdf_Exception;
 class Pdf extends Action
 {
     /**
+     * Authorization level of a basic admin session.
+     *
+     * @see _isAllowed()
+     */
+    const ADMIN_RESOURCE = 'Cap_Rma::request_print';
+
+    /**
      * @var RequestRepository
      */
     protected $requestRepository;
 
     /**
-     * @var Request\ToPdf
+     * @var Request\Pdf\Request
      */
-    protected $toPdf;
+    protected $requestToPdf;
 
     /**
      * ToPdf constructor.
      *
      * @param Action\Context $context
      * @param RequestRepository $requestRepository
-     * @param Request\ToPdf $toPdf
+     * @param Request\Pdf\Request $requestToPdf
      */
     public function __construct(
         Action\Context $context,
         RequestRepository $requestRepository,
-        Request\ToPdf $toPdf
+        Request\Pdf\Request $requestToPdf
     ) {
         $this->requestRepository = $requestRepository;
-        $this->toPdf = $toPdf;
+        $this->requestToPdf = $requestToPdf;
         parent::__construct($context);
     }
 
@@ -51,8 +58,25 @@ class Pdf extends Action
         /** @var Request $model */
         $model = $this->requestRepository->getById($requestId);
 
-        $filename = 'rma-request-' . $requestId . '.pdf';
-        $this->toPdf->setData('filename', $filename);
-        $this->toPdf->execute();
+        $data = [
+            'filename' => 'rma-request-' . $model->getRequestId() . '.pdf',
+            'requestId' => $model->getRequestId(),
+            'createdAt' => $model->getCreatedAt(),
+            'incrementId' => $model->getIncrementId(),
+            'customerName' => $model->getCustomerName(),
+            'customerEmail' => $model->getCustomerEmail(),
+            'description' => $model->getDescription()
+        ];
+
+        $this->requestToPdf->addData($data);
+        $this->requestToPdf->getPdf();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }
