@@ -50,15 +50,6 @@ class RequestActions extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['request_id'])) {
                     $item[$this->getData('name')] = [
-                        'print' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_PRINT,
-                                [
-                                    'request_id' => $item['request_id']
-                                ]
-                            ),
-                            'label' => __('Print')
-                        ],
                         'edit' => [
                             'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_EDIT,
@@ -67,6 +58,15 @@ class RequestActions extends Column
                                 ]
                             ),
                             'label' => __('Edit')
+                        ],
+                        'print' => [
+                            'href' => $this->urlBuilder->getUrl(
+                                static::URL_PATH_PRINT,
+                                [
+                                    'request_id' => $item['request_id']
+                                ]
+                            ),
+                            'label' => __('Print')
                         ],
                         'delete' => [
                             'href' => $this->urlBuilder->getUrl(

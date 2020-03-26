@@ -60,11 +60,11 @@ class Pdf extends Action
 
         $data = [
             'filename' => 'rma-request-' . $model->getRequestId() . '.pdf',
-            'requestId' => $model->getRequestId(),
-            'createdAt' => $model->getCreatedAt(),
-            'incrementId' => $model->getIncrementId(),
-            'customerName' => $model->getCustomerName(),
-            'customerEmail' => $model->getCustomerEmail(),
+            'request_id' => $model->getRequestId(),
+            'created_at' => $model->getCreatedAt(),
+            'increment_id' => $model->getIncrementId(),
+            'customer_name' => $model->getCustomerName(),
+            'customer_email' => $model->getCustomerEmail(),
             'description' => $model->getDescription()
         ];
 

@@ -55,13 +55,6 @@ class Request extends DataObject
      */
     public function getPdf()
     {
-        $requestId = $this->getData('requestId');
-        $createdAt = $this->getData('createdAt');
-        $incrementId = $this->getData('incrementId');
-        $customerName = $this->getData('customerName');
-        $customerEmail = $this->getData('customerEmail');
-        $description = $this->getData('description');
-
         $pdf = new Zend_Pdf();
         $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
         $page = $pdf->pages[0];
@@ -81,11 +74,11 @@ class Request extends DataObject
             Zend_Pdf_Page::SHAPE_DRAW_STROKE
         );
         $this->_setFontBold($page, 14);
-        $page->drawText(__('Request #%1', $requestId), $x + 10, $this->y + 50, 'UTF-8');
+        $page->drawText(__('Request #%1', $this->getData('request_id')), $x + 10, $this->y + 50, 'UTF-8');
         $this->_setFontRegular($page, 11);
-        $page->drawText(__('Created At: %1', $createdAt), $x + 10, $this->y + 35, 'UTF-8');
+        $page->drawText(__('Created At: %1', $this->getData('created_at')), $x + 10, $this->y + 35, 'UTF-8');
         $this->_setFontBold($page, 11);
-        $page->drawText(__('Order: %1', $incrementId), $x + 10, $this->y + 20, 'UTF-8');
+        $page->drawText(__('Order: %1', $this->getData('increment_id')), $x + 10, $this->y + 20, 'UTF-8');
 
         // Body
         $page->drawRectangle(
@@ -96,11 +89,19 @@ class Request extends DataObject
             Zend_Pdf_Page::SHAPE_DRAW_STROKE
         );
         $this->_setFontBold($page, 11);
-        $page->drawText(__('Name: %1', $customerName), $x + 10, $this->y - 10, 'UTF-8');
-        $page->drawText(__('Email: %1', $customerEmail), $x + 10, $this->y - 25, 'UTF-8');
-        $page->drawText(__('Description:'), $x + 10, $this->y - 45, 'UTF-8');
+        $page->drawText(__('Name: %1', $this->getData('customer_name')), $x + 10, $this->y - 10, 'UTF-8');
+        $page->drawText(__('Email: %1', $this->getData('customer_email')), $x + 10, $this->y - 25, 'UTF-8');
+        $page->drawText(__('Description:'), $x + 10, $this->y - 55, 'UTF-8');
+
         $this->_setFontRegular($page, 10);
-        $page->drawText(__('%1', $description), $x + 10, $this->y - 60, 'UTF-8');
+        $line = 680;
+        $textChunk = wordwrap($this->getData('description'), 120, "\n");
+        foreach (explode("\n", $textChunk) as $textLine) {
+            if ($textLine !== '') {
+                $page->drawText(strip_tags(ltrim($textLine)), $x + 10, $line, 'UTF-8');
+                $line -= 12;
+            }
+        }
 
         $filename = $this->getData('filename');
         $this->fileFactory->create(
