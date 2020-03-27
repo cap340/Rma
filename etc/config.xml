@@ -5,6 +5,7 @@
 			<general/>
 			<settings>
 				<allowed_orders>closed</allowed_orders>
+				<types>0</types>
 			</settings>
 			<email>
 				<admin>email@domain.com</admin>

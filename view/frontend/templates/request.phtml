@@ -6,6 +6,7 @@
 
 // @codingStandardsIgnoreFile
 /** @var \Cap\Rma\Block\Customer\Request $block */
+
 ?>
 
 <?php if ($block->isLoggedIn()): ?>
@@ -48,20 +49,18 @@
                                     </div>
                                 </div>
 
-                                <?php if ($block->getTypesEnable()): ?>
-                                    <?php $types = $block->getTypesOptions(); ?>
-                                    <div class="field request-type required">
-                                        <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
-                                        <div class="control">
-                                            <select id="requestType" name="requestType" data-validate="{required:true}">
-                                                <option value="" selected disabled hidden></option>
-                                                <?php foreach ($types as $type): ?>
-                                                    <option value="<?php echo $block->escapeHtml(__($type['value'])); ?>"><?php echo $block->escapeHtml(__($type['label'])); ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
+                                <?php $types = $block->getTypesOptions(); ?>
+                                <div class="field request-type required">
+                                    <label class="label" for="requestType"><?php /* @escapeNotVerified */ echo __('Request Type'); ?></label>
+                                    <div class="control">
+                                        <select id="requestType" name="requestType" data-validate="{required:true}">
+                                            <option value="" selected disabled hidden></option>
+                                            <?php foreach ($types as $type): ?>
+                                                <option value="<?php echo $block->escapeHtml(__($type['value'])); ?>"><?php echo $block->escapeHtml(__($type['label'])); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
-                                <?php endif ?>
+                                </div>
 
                                 <div class="field description required">
                                     <label class="label" for="description"><?php /* @escapeNotVerified */ echo __('Details'); ?></label>

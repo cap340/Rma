@@ -3,6 +3,7 @@
 namespace Cap\Rma\Controller\Adminhtml\Request;
 
 use Cap\Rma\Controller\Adminhtml\AbstractMassAction;
+use Cap\Rma\Helper\Data;
 use Cap\Rma\Helper\Email;
 use Cap\Rma\Model\Config\Source\Request\Status;
 use Cap\Rma\Model\Request;
@@ -34,6 +35,11 @@ class MassAccept extends AbstractMassAction
     protected $emailSender;
 
     /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
      * MassReject constructor.
      *
      * @param Context $context
@@ -41,18 +47,21 @@ class MassAccept extends AbstractMassAction
      * @param CollectionFactory $collectionFactory
      * @param DateTime $dateTime
      * @param Email $emailSender
+     * @param Data $helper
      */
     public function __construct(
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
         DateTime $dateTime,
-        Email $emailSender
+        Email $emailSender,
+        Data $helper
     ) {
         parent::__construct($context, $filter);
         $this->collectionFactory = $collectionFactory;
         $this->dateTime = $dateTime;
         $this->emailSender = $emailSender;
+        $this->helper = $helper;
     }
 
     /**
@@ -74,6 +83,7 @@ class MassAccept extends AbstractMassAction
             $emailData = [
                 'customerEmail' => $request->getCustomerEmail(),
                 'requestId' => $request->getRequestId(),
+                'requestType' => $this->helper->getTypeOptionLabel($request->getType()),
                 'orderIncrementId' => $request->getIncrementId(),
                 'customerName' => $request->getCustomerName(),
                 'description' => $request->getDescription(),

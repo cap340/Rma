@@ -70,6 +70,7 @@ class Email extends AbstractHelper
      * @param $receivers
      * @param $emailTemplate
      * @param $templateVar
+     * @noinspection DuplicatedCode
      */
     private function sendEmail($receivers, $emailTemplate, $templateVar)
     {
@@ -113,7 +114,6 @@ class Email extends AbstractHelper
      */
     public function sendEmailAdmin($emailData)
     {
-        //todo: if isset requestType in email subject
         $emailTemplate = $this->helper->getConfigEmailTemplateAdmin();
         $adminEmail = $this->helper->getConfigEmailAdmin();
         $adminEmails = explode(',', $adminEmail);
@@ -124,6 +124,7 @@ class Email extends AbstractHelper
                 $emailTemplateData = [
                     'adminEmail' => $value,
                     'requestId' => $emailData['requestId'],
+                    'requestType' => $this->helper->getTypeOptionLabel($emailData['requestType']),
                     'orderIncrementId' => $emailData['orderIncrementId'],
                     'customerName' => $emailData['customerName'],
                     'description' => $emailData['description'],
@@ -135,6 +136,7 @@ class Email extends AbstractHelper
             $emailTemplateData = [
                 'adminEmail' => $adminEmail,
                 'requestId' => $emailData['requestId'],
+                'requestType' => $this->helper->getTypeOptionLabel($emailData['requestType']),
                 'orderIncrementId' => $emailData['orderIncrementId'],
                 'customerName' => $emailData['customerName'],
                 'description' => $emailData['description'],
@@ -150,12 +152,12 @@ class Email extends AbstractHelper
      */
     public function sendEmailCustomer($emailData, $emailTemplate)
     {
-        //todo: if isset requestType in email subject
         $customerEmail = $emailData['customerEmail'];
 
         $emailTemplateData = [
             'customerEmail' => $customerEmail,
             'requestId' => $emailData['requestId'],
+            'requestType' => $this->helper->getTypeOptionLabel($emailData['requestType']),
             'orderIncrementId' => $emailData['orderIncrementId'],
             'customerName' => $emailData['customerName'],
             'description' => $emailData['description'],

@@ -6,10 +6,13 @@
 
 // @codingStandardsIgnoreFile
 /** @var \Cap\Rma\Block\Customer\History $block */
+/** @var \Cap\Rma\Helper\Data $helper */
+$helper = $this->helper('Cap\Rma\Helper\Data');
 ?>
 
 <?php if ($block->isLoggedIn()): ?>
     <div class="block block-dashboard-rma-history">
+
         <div class="block-content">
             <?php $requests = $block->getRequestsHistory(); ?>
             <?php if($requests && count($requests)): ?>
@@ -19,6 +22,7 @@
                         <thead>
                         <tr>
                             <th scope="col" class="col id"><?php echo $block->escapeHtml(__('Request #')) ?></th>
+                            <th scope="col" class="col type"><?php echo $block->escapeHtml(__('Type')) ?></th>
                             <th scope="col" class="col status"><?php echo $block->escapeHtml(__('Status')) ?></th>
                             <th scope="col" class="col date"><?php echo $block->escapeHtml(__('Date')) ?></th>
                             <th scope="col" class="col update"><?php echo $block->escapeHtml(__('Updated')) ?></th>
@@ -32,8 +36,11 @@
                                 <td data-th="<?php echo $block->escapeHtml(__('Request #')) ?>" class="col id">
                                     <?php /* @escapeNotVerified */ echo $request->getRequestId(); ?>
                                 </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Type')) ?>" class="col type">
+                                    <?php /* @escapeNotVerified */ echo $helper->getTypeOptionLabel($request->getType()); ?>
+                                </td>
                                 <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status">
-                                    <?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getStatusOptionLabel($request->getStatus())); ?>
+                                    <?php /* @escapeNotVerified */ echo $block->escapeHtml($helper->getStatusOptionLabel($request->getStatus())); ?>
                                 </td>
                                 <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($request->getCreatedAt()) ?></td>
                                 <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col update">

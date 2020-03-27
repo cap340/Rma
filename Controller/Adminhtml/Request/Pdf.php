@@ -2,6 +2,7 @@
 
 namespace Cap\Rma\Controller\Adminhtml\Request;
 
+use Cap\Rma\Helper\Data;
 use Cap\Rma\Model\Request;
 use Cap\Rma\Model\RequestRepository;
 use Magento\Backend\App\Action;
@@ -30,19 +31,27 @@ class Pdf extends Action
     protected $requestToPdf;
 
     /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
      * ToPdf constructor.
      *
      * @param Action\Context $context
      * @param RequestRepository $requestRepository
      * @param Request\Pdf\Request $requestToPdf
+     * @param Data $helper
      */
     public function __construct(
         Action\Context $context,
         RequestRepository $requestRepository,
-        Request\Pdf\Request $requestToPdf
+        Request\Pdf\Request $requestToPdf,
+        Data $helper
     ) {
         $this->requestRepository = $requestRepository;
         $this->requestToPdf = $requestToPdf;
+        $this->helper = $helper;
         parent::__construct($context);
     }
 
@@ -57,10 +66,11 @@ class Pdf extends Action
 
         /** @var Request $model */
         $model = $this->requestRepository->getById($requestId);
-
+        $requestType = strtolower($this->helper->getTypeOptionLabel($model->getType()));
         $data = [
-            'filename' => 'rma-request-' . $model->getRequestId() . '.pdf',
-            'request_id' => $model->getRequestId(),
+            'filename' => 'rma-request-' . $requestType . '-' . $requestId . '.pdf',
+            'request_id' => $requestId,
+            'request_type' => $requestType,
             'created_at' => $model->getCreatedAt(),
             'increment_id' => $model->getIncrementId(),
             'customer_name' => $model->getCustomerName(),

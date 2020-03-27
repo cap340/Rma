@@ -8,7 +8,6 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Framework\View\Element\Template;
 use Magento\Theme\Block\Html\Pager;
 use Magento\Customer\Model\Session as CustomerSession;
-use Cap\Rma\Model\Config\Source\Request\Status as RequestStatus;
 
 class History extends Template
 {
@@ -23,29 +22,21 @@ class History extends Template
     protected $customerSession;
 
     /**
-     * @var RequestStatus
-     */
-    protected $requestStatus;
-
-    /**
      * Request constructor.
      *
      * @param Template\Context $context
      * @param Request $requestCollection
      * @param CustomerSession $customerSession
-     * @param RequestStatus $requestStatus
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
         Request $requestCollection,
         CustomerSession $customerSession,
-        RequestStatus $requestStatus,
         array $data = []
     ) {
         $this->requestCollection = $requestCollection;
         $this->customerSession = $customerSession;
-        $this->requestStatus = $requestStatus;
         parent::__construct($context, $data);
     }
 
@@ -108,22 +99,6 @@ class History extends Template
         $collection->setCurPage($page);
 
         return $collection;
-    }
-
-    /**
-     * @param $optionId
-     * @return mixed|null
-     */
-    public function getStatusOptionLabel($optionId)
-    {
-        $options = $this->requestStatus->toOptionArray();
-        foreach ($options as $key => $option) {
-            if (in_array($optionId, $option)) {
-                return $option['label'];
-            }
-        }
-
-        return null;
     }
 
     /**

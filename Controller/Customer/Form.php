@@ -82,15 +82,12 @@ class Form extends Action
 
         $post = (array)$this->getRequest()->getPost();
 
-        //todo: required fields
         if (!empty($post)) {
             $model = $this->requestFactory->create();
             $model->setCustomerName($post['customerName']);
             $model->setCustomerEmail($post['customerEmail']);
             $model->setIncrementId($post['orderIncrementId']);
-            if (isset($post['requestType'])) {
-                $model->setType($post['requestType']);
-            }
+            $model->setType($post['requestType']);
             $model->setDescription($post['description']);
             $model->setStatus(RequestStatus::STATUS_PENDING);
             $model->save();

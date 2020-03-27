@@ -28,16 +28,8 @@
 					<comment><![CDATA[Select Order <strong>Statuses</strong> that can apply a request.]]></comment>
 					<source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
 				</field>
-				<field id="types_enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
-					<label>Enable Request Types</label>
-					<comment/>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-				</field>
 				<field id="types" type="multiselect" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
 					<label>Request Types</label>
-					<depends>
-						<field id="*/*/types_enable">1</field>
-					</depends>
 					<comment><![CDATA[Select one or more request <strong>Types</strong>.]]></comment>
 					<source_model>Cap\Rma\Model\Config\Source\Request\Types</source_model>
 				</field>

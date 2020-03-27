@@ -137,17 +137,6 @@ class Request extends Template
     }
 
     /**
-     * @return bool
-     */
-    public function getTypesEnable()
-    {
-        if ($this->helper->getConfigTypesEnable()) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * @return array
      */
     public function getTypesOptions()

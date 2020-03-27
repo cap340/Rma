@@ -6,13 +6,14 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
+use Cap\Rma\Model\Config\Source\Request\Types as RequestTypes;
+use Cap\Rma\Model\Config\Source\Request\Status as RequestStatus;
 
 class Data extends AbstractHelper
 {
     /**
      * System path configuration
      */
-    const CONFIG_TYPES_ENABLE = 'rma/settings/types_enable';
     const CONFIG_TYPES_OPTIONS = 'rma/settings/types';
     const CONFIG_ALLOWED_ORDERS = 'rma/settings/allowed_orders';
     const CONFIG_POLICY_URL = 'rma/settings/policy_url';
@@ -29,16 +30,32 @@ class Data extends AbstractHelper
     protected $scopeConfig;
 
     /**
+     * @var RequestTypes
+     */
+    protected $requestTypes;
+
+    /**
+     * @var RequestStatus
+     */
+    protected $requestStatus;
+
+    /**
      * Data constructor.
      *
      * @param Context $context
      * @param ScopeConfigInterface $scopeConfig
+     * @param RequestTypes $requestTypes
+     * @param RequestStatus $requestStatus
      */
     public function __construct(
         Context $context,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        RequestTypes $requestTypes,
+        RequestStatus $requestStatus
     ) {
         $this->scopeConfig = $scopeConfig;
+        $this->requestTypes = $requestTypes;
+        $this->requestStatus = $requestStatus;
         parent::__construct($context);
     }
 
@@ -49,19 +66,34 @@ class Data extends AbstractHelper
     /**
      * @return mixed
      */
-    public function getConfigTypesEnable()
-    {
-        $storeScope = ScopeInterface::SCOPE_STORE;
-        return $this->scopeConfig->getValue(self::CONFIG_TYPES_ENABLE, $storeScope);
-    }
-
-    /**
-     * @return mixed
-     */
     public function getConfigTypesOptions()
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
         return $this->scopeConfig->getValue(self::CONFIG_TYPES_OPTIONS, $storeScope);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getTypeOptionLabel($id)
+    {
+        $options = $this->requestTypes->toOptionArray();
+        $key = array_search($id, array_column($options, 'value'));
+
+        return $options[$key]['label'];
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getStatusOptionLabel($id)
+    {
+        $options = $this->requestStatus->toOptionArray();
+        $key = array_search($id, array_column($options, 'value'));
+
+        return $options[$key]['label'];
     }
 
     /**

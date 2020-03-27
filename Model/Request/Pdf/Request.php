@@ -89,12 +89,13 @@ class Request extends DataObject
             Zend_Pdf_Page::SHAPE_DRAW_STROKE
         );
         $this->_setFontBold($page, 11);
-        $page->drawText(__('Name: %1', $this->getData('customer_name')), $x + 10, $this->y - 10, 'UTF-8');
-        $page->drawText(__('Email: %1', $this->getData('customer_email')), $x + 10, $this->y - 25, 'UTF-8');
-        $page->drawText(__('Description:'), $x + 10, $this->y - 55, 'UTF-8');
+        $page->drawText(__('Type: %1', $this->getData('request_type')), $x + 10, $this->y - 10, 'UTF-8');
+        $page->drawText(__('Name: %1', $this->getData('customer_name')), $x + 10, $this->y - 25, 'UTF-8');
+        $page->drawText(__('Email: %1', $this->getData('customer_email')), $x + 10, $this->y - 40, 'UTF-8');
+        $page->drawText(__('Description:'), $x + 10, $this->y - 70, 'UTF-8');
 
         $this->_setFontRegular($page, 10);
-        $line = 680;
+        $line = 660;
         $textChunk = wordwrap($this->getData('description'), 120, "\n");
         foreach (explode("\n", $textChunk) as $textLine) {
             if ($textLine !== '') {

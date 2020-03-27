@@ -1,4 +1,4 @@
-<!--@subject New Request {{trans "#%requestId" requestId=$requestId}}  @-->
+<!--@subject New Request {{trans "#%requestId" requestId=$requestId}}: {{trans "%requestType" requestType=$requestType}}  @-->
 {{template config_path="design/email/header_template"}}
 <table width="100%">
     <tr class="email-intro">
@@ -10,6 +10,7 @@
     <tr class="email-summary">
         <td>
             <h3>{{trans "Request"}} <span style="font-weight: bold">{{trans "#%requestId" requestId=$requestId}}</span></h3>
+            <p>{{trans "Type"}} <span style="font-weight: bold">{{trans "%requestType" requestType=$requestType}}</span></p>
             <p>{{trans "Order"}} <span style="font-weight: bold">{{trans "#%orderIncrementId" orderIncrementId=$orderIncrementId}}</span></p>
             <p>{{trans "Customer Name: "}}{{trans "%customerName" customerName=$customerName}}</span></p>
             <p>{{trans "Description: "}}{{trans "%description" description=$description}}</p>
